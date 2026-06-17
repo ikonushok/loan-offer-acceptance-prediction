@@ -87,6 +87,7 @@ def main() -> None:
     seed = int(cfg["seed"])
     feature_engineering_cfg = cfg.get("feature_engineering", {"enabled": False})
     time_features_cfg = cfg.get("time_features", {"enabled": True})
+    excluded_features = cfg.get("excluded_features", [])
 
     baseline = load_baseline_module(repo_root)
 
@@ -106,6 +107,7 @@ def main() -> None:
         test,
         feature_engineering_cfg=feature_engineering_cfg,
         time_features_cfg=time_features_cfg,
+        excluded_features=excluded_features,
     )
 
     folds = baseline.make_time_folds(train, cfg["cutoffs"])
