@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Data: do not commit platform CSV files
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Large/generated artifacts
+experiments/runs/*
+!experiments/runs/.gitkeep
+submissions/*.csv
+submissions/cards/*
+!submissions/cards/.gitkeep
+reports/**/*.html
+reports/**/*.png
+reports/**/*.jpg
+reports/**/*.parquet
+reports/**/*.pkl
+reports/**/*.joblib
+
+# Model artifacts
+*.pkl
+*.joblib
+*.cbm
+*.model
+*.onnx
+/agents/
+/archives/
+/data/
+/AGENTS.md
+/FILE_MANIFEST.md
