@@ -1,0 +1,78 @@
+{
+  "created_at_utc": "2026-06-17T05:14:25.012871+00:00",
+  "validation_level": "L5_partial_test_only_format_check",
+  "policy": "test_only",
+  "verdict": "PASS_WITH_RISKS",
+  "risks": [
+    "sample_submission.csv contains 8721 extra non-test IDs; this file follows test-only working policy.",
+    "Platform row contract is not fully resolved.",
+    "No red-team review has been completed yet.",
+    "No platform upload is authorized by this script."
+  ],
+  "source_run": {
+    "run_id": "blend_no_time_old038_context062_20260617T051400Z",
+    "run_dir": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_no_time_old038_context062_20260617T051400Z",
+    "run_summary": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_no_time_old038_context062_20260617T051400Z/run_summary.json",
+    "test_predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_no_time_old038_context062_20260617T051400Z/test_predictions.csv",
+    "config_path": null,
+    "validation_level": "L3_partial_time_holdout_blend",
+    "fold_metrics": [
+      {
+        "fold": 1,
+        "valid_rows": 7612,
+        "valid_positive_rate": 0.10759327377824487,
+        "roc_auc": 0.7966620454475599
+      },
+      {
+        "fold": 2,
+        "valid_rows": 5053,
+        "valid_positive_rate": 0.09321195329507223,
+        "roc_auc": 0.7881769427307631
+      },
+      {
+        "fold": 3,
+        "valid_rows": 8721,
+        "valid_positive_rate": 0.0784313725490196,
+        "roc_auc": 0.7501497096397001
+      },
+      {
+        "fold": "OOF_TIME_HOLDOUT",
+        "valid_rows": 21386,
+        "valid_positive_rate": 0.09230337604040026,
+        "roc_auc": 0.7785344028312843
+      }
+    ]
+  },
+  "data_contract": {
+    "test_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/test_apps.csv",
+    "sample_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/sample_submission.csv",
+    "test_rows": 36311,
+    "sample_rows": 45032,
+    "prediction_rows": 36311,
+    "submission_rows": 36311,
+    "test_in_sample": 36311,
+    "test_missing_from_sample": 0,
+    "sample_extra_not_in_test": 8721,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test": true,
+    "front_id_unique": true,
+    "target_col": "target_value",
+    "target_min": 0.0050098059569315,
+    "target_max": 0.98934452001032,
+    "target_mean": 0.40517012286315734,
+    "target_nan": 0,
+    "target_inf": 0
+  },
+  "hashes": {
+    "train_sha256": null,
+    "test_sha256": null,
+    "submission_sha256": "c512f1423b17c1bf8bb501074295b853d6caf7e737980e5c6449e4f85009e319"
+  },
+  "artifacts": {
+    "submission": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/submission_test_only_blend_no_time_old038_context062_20260617T051400Z_20260617T051424Z.csv",
+    "card": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/cards/submission_test_only_blend_no_time_old038_context062_20260617T051400Z_20260617T051424Z_card.json"
+  }
+}
