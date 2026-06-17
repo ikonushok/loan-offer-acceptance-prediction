@@ -1,0 +1,20 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "run_prefix": "catboost_time_smoke",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "model": {
+    "iterations": 30,
+    "learning_rate": 0.03,
+    "depth": 6,
+    "l2_leaf_reg": 6.0,
+    "auto_class_weights": "Balanced",
+    "verbose": 10
+  }
+}

@@ -1,0 +1,5 @@
+variant,feature_count,adversarial_auc,valid_rows
+all_except_id,26,0.9999996797577546,54466
+no_decision_day,25,0.9911534954812945,54466
+no_day_cb_offered,23,0.797992487323395,54466
+no_day_rate_limits,21,0.7601505240946589,54466

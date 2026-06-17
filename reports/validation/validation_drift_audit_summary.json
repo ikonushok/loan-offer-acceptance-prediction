@@ -1,0 +1,779 @@
+{
+  "validation_level": "L4_partial",
+  "train_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/train_apps.csv",
+  "test_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/test_apps.csv",
+  "train_rows": 145241,
+  "test_rows": 36311,
+  "context_columns": [
+    "decision_day",
+    "loan_amount_last",
+    "cb_rate",
+    "corp_credit_products",
+    "sum_deb_ul_90",
+    "sum_deb_ul_30",
+    "cnt_deb_loan_90",
+    "cnt_deb_ul_ip_90",
+    "cnt_deb_ul_ip_30",
+    "balance_rur_amt_30_min",
+    "cnt_cred_loan_90",
+    "loan_rev_max_start_non_fin",
+    "loan_rev_min_start_fin",
+    "app_term_mean_360",
+    "overdraft_app_term_max_360",
+    "days_from_authperson_registration",
+    "fl_hdb_bki_total_active_products",
+    "corp_list",
+    "count_all_corp_dashboard_events",
+    "p75_time_spent_minutes",
+    "sum_deb_investment_90",
+    "db_group_last",
+    "fl_adminarea"
+  ],
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "train_test_context_overlap_groups": 0,
+  "timefold_context_overlap": [
+    {
+      "fold": 1,
+      "cutoff": "2025-01-01",
+      "next_cutoff": "2025-03-01",
+      "train_rows": 123855,
+      "valid_rows": 7612,
+      "train_start": "2024-02-01",
+      "train_end": "2024-12-30",
+      "valid_start": "2025-01-02",
+      "valid_end": "2025-02-28",
+      "context_overlap_groups": 0,
+      "train_overlap_rows": 0,
+      "valid_overlap_rows": 0
+    },
+    {
+      "fold": 2,
+      "cutoff": "2025-03-01",
+      "next_cutoff": "2025-04-01",
+      "train_rows": 131467,
+      "valid_rows": 5053,
+      "train_start": "2024-02-01",
+      "train_end": "2025-02-28",
+      "valid_start": "2025-03-01",
+      "valid_end": "2025-03-31",
+      "context_overlap_groups": 0,
+      "train_overlap_rows": 0,
+      "valid_overlap_rows": 0
+    },
+    {
+      "fold": 3,
+      "cutoff": "2025-04-01",
+      "next_cutoff": null,
+      "train_rows": 136520,
+      "valid_rows": 8721,
+      "train_start": "2024-02-01",
+      "train_end": "2025-03-31",
+      "valid_start": "2025-04-01",
+      "valid_end": "2025-06-05",
+      "context_overlap_groups": 0,
+      "train_overlap_rows": 0,
+      "valid_overlap_rows": 0
+    }
+  ],
+  "adversarial_scores": [
+    {
+      "variant": "all_except_id",
+      "feature_count": 26,
+      "adversarial_auc": 0.9999996797577546,
+      "valid_rows": 54466
+    },
+    {
+      "variant": "no_decision_day",
+      "feature_count": 25,
+      "adversarial_auc": 0.9911534954812945,
+      "valid_rows": 54466
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature_count": 23,
+      "adversarial_auc": 0.797992487323395,
+      "valid_rows": 54466
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature_count": 21,
+      "adversarial_auc": 0.7601505240946589,
+      "valid_rows": 54466
+    }
+  ],
+  "top_univariate_drift": [
+    {
+      "column": "decision_day",
+      "dtype": "object",
+      "adv_auc_value": 0.9999996037047688,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.0,
+      "test_missing": 0.0,
+      "train_nunique": 485,
+      "test_nunique": 177
+    },
+    {
+      "column": "overdraft_limit_max",
+      "dtype": "float64",
+      "adv_auc_value": 0.6596533518087206,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.0,
+      "test_missing": 0.0,
+      "train_nunique": 2056,
+      "test_nunique": 1976
+    },
+    {
+      "column": "overdraft_limit_min",
+      "dtype": "float64",
+      "adv_auc_value": 0.6363785388656682,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.0,
+      "test_missing": 0.0,
+      "train_nunique": 2052,
+      "test_nunique": 1950
+    },
+    {
+      "column": "cb_rate",
+      "dtype": "float64",
+      "adv_auc_value": 0.6307185602130229,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.0,
+      "test_missing": 0.0,
+      "train_nunique": 4,
+      "test_nunique": 5
+    },
+    {
+      "column": "cnt_deb_ul_ip_30",
+      "dtype": "float64",
+      "adv_auc_value": 0.5897417143764425,
+      "adv_auc_missing": 0.5513676617627848,
+      "train_missing": 0.229776715941091,
+      "test_missing": 0.12704139241552145,
+      "train_nunique": 1387,
+      "test_nunique": 583
+    },
+    {
+      "column": "app_term_mean_360",
+      "dtype": "float64",
+      "adv_auc_value": 0.5775489209013493,
+      "adv_auc_missing": 0.5560716941199104,
+      "train_missing": 0.38476050151128127,
+      "test_missing": 0.27261711327146043,
+      "train_nunique": 1780,
+      "test_nunique": 1299
+    },
+    {
+      "column": "offered_rate",
+      "dtype": "float64",
+      "adv_auc_value": 0.5755239159809884,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.0,
+      "test_missing": 0.0,
+      "train_nunique": 134,
+      "test_nunique": 161
+    },
+    {
+      "column": "cnt_deb_ul_ip_90",
+      "dtype": "float64",
+      "adv_auc_value": 0.5736042040489249,
+      "adv_auc_missing": 0.5486685369433916,
+      "train_missing": 0.20865320398510062,
+      "test_missing": 0.11131613009831731,
+      "train_nunique": 2659,
+      "test_nunique": 1251
+    },
+    {
+      "column": "cnt_deb_loan_90",
+      "dtype": "float64",
+      "adv_auc_value": 0.567976050747562,
+      "adv_auc_missing": 0.5521007744733042,
+      "train_missing": 0.2165917337390957,
+      "test_missing": 0.11239018479248712,
+      "train_nunique": 897,
+      "test_nunique": 738
+    },
+    {
+      "column": "days_from_authperson_registration",
+      "dtype": "float64",
+      "adv_auc_value": 0.5525257731404677,
+      "adv_auc_missing": 0.5551713698510341,
+      "train_missing": 0.5402950957374295,
+      "test_missing": 0.4299523560353612,
+      "train_nunique": 7091,
+      "test_nunique": 5970
+    },
+    {
+      "column": "count_all_corp_dashboard_events",
+      "dtype": "float64",
+      "adv_auc_value": 0.548152857110255,
+      "adv_auc_missing": 0.5715384363717453,
+      "train_missing": 0.35243491851474446,
+      "test_missing": 0.2093580457712539,
+      "train_nunique": 17029,
+      "test_nunique": 10814
+    },
+    {
+      "column": "sum_deb_ul_90",
+      "dtype": "float64",
+      "adv_auc_value": 0.5472259456028999,
+      "adv_auc_missing": 0.5678035501647893,
+      "train_missing": 0.37256008978181093,
+      "test_missing": 0.23695298945223212,
+      "train_nunique": 75712,
+      "test_nunique": 23510
+    },
+    {
+      "column": "fl_hdb_bki_total_active_products",
+      "dtype": "float64",
+      "adv_auc_value": 0.5454051919083065,
+      "adv_auc_missing": 0.5296587007761085,
+      "train_missing": 0.16777631660481546,
+      "test_missing": 0.2270937181570323,
+      "train_nunique": 91,
+      "test_nunique": 66
+    },
+    {
+      "column": "db_group_last",
+      "dtype": "object",
+      "adv_auc_value": 0.5432941517673086,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.38476050151128127,
+      "test_missing": 0.27261711327146043,
+      "train_nunique": 9,
+      "test_nunique": 9
+    },
+    {
+      "column": "cnt_cred_loan_90",
+      "dtype": "float64",
+      "adv_auc_value": 0.539970427645887,
+      "adv_auc_missing": 0.5521007744733042,
+      "train_missing": 0.2165917337390957,
+      "test_missing": 0.11239018479248712,
+      "train_nunique": 137,
+      "test_nunique": 118
+    },
+    {
+      "column": "sum_deb_ul_30",
+      "dtype": "float64",
+      "adv_auc_value": 0.5398062071684505,
+      "adv_auc_missing": 0.568279134875322,
+      "train_missing": 0.423110554182359,
+      "test_missing": 0.28655228443171493,
+      "train_nunique": 68585,
+      "test_nunique": 21711
+    },
+    {
+      "column": "corp_credit_products",
+      "dtype": "float64",
+      "adv_auc_value": 0.530980155282886,
+      "adv_auc_missing": 0.5715384363717453,
+      "train_missing": 0.35243491851474446,
+      "test_missing": 0.2093580457712539,
+      "train_nunique": 2504,
+      "test_nunique": 1808
+    },
+    {
+      "column": "loan_amount_last",
+      "dtype": "float64",
+      "adv_auc_value": 0.5254180745409489,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.0,
+      "test_missing": 0.0,
+      "train_nunique": 3205,
+      "test_nunique": 1233
+    },
+    {
+      "column": "overdraft_app_term_max_360",
+      "dtype": "float64",
+      "adv_auc_value": 0.5216144374634958,
+      "adv_auc_missing": 0.5209815421284762,
+      "train_missing": 0.9620699389290903,
+      "test_missing": 0.9201068546721379,
+      "train_nunique": 6,
+      "test_nunique": 5
+    },
+    {
+      "column": "loan_rev_max_start_non_fin",
+      "dtype": "float64",
+      "adv_auc_value": 0.5117683643164117,
+      "adv_auc_missing": 0.5280140302490227,
+      "train_missing": 0.9132063260374137,
+      "test_missing": 0.8571782655393683,
+      "train_nunique": 723,
+      "test_nunique": 698
+    },
+    {
+      "column": "sum_deb_investment_90",
+      "dtype": "float64",
+      "adv_auc_value": 0.5112400571709457,
+      "adv_auc_missing": 0.5558909775216527,
+      "train_missing": 0.8860927699478798,
+      "test_missing": 0.7743108149045743,
+      "train_nunique": 8769,
+      "test_nunique": 5377
+    },
+    {
+      "column": "fl_adminarea",
+      "dtype": "object",
+      "adv_auc_value": 0.5110281310907407,
+      "adv_auc_missing": NaN,
+      "train_missing": 0.29819403611927764,
+      "test_missing": 0.31709399355567186,
+      "train_nunique": 83,
+      "test_nunique": 80
+    },
+    {
+      "column": "loan_rev_min_start_fin",
+      "dtype": "float64",
+      "adv_auc_value": 0.509552129976502,
+      "adv_auc_missing": 0.5586756624814428,
+      "train_missing": 0.8586143031237736,
+      "test_missing": 0.7412629781608879,
+      "train_nunique": 1822,
+      "test_nunique": 1578
+    },
+    {
+      "column": "balance_rur_amt_30_min",
+      "dtype": "float64",
+      "adv_auc_value": 0.5080202332212567,
+      "adv_auc_missing": 0.5435774260635017,
+      "train_missing": 0.2397807781549287,
+      "test_missing": 0.15262592602792543,
+      "train_nunique": 71423,
+      "test_nunique": 19854
+    },
+    {
+      "column": "p75_time_spent_minutes",
+      "dtype": "float64",
+      "adv_auc_value": 0.5076534334478137,
+      "adv_auc_missing": 0.5715384363717453,
+      "train_missing": 0.35243491851474446,
+      "test_missing": 0.2093580457712539,
+      "train_nunique": 34323,
+      "test_nunique": 17015
+    },
+    {
+      "column": "corp_list",
+      "dtype": "float64",
+      "adv_auc_value": 0.5034390017585858,
+      "adv_auc_missing": 0.5715384363717453,
+      "train_missing": 0.35243491851474446,
+      "test_missing": 0.2093580457712539,
+      "train_nunique": 4983,
+      "test_nunique": 3567
+    }
+  ],
+  "top_adversarial_importance": [
+    {
+      "variant": "all_except_id",
+      "feature": "decision_day",
+      "importance": 0.5929932226443844
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "cb_rate",
+      "importance": 0.27485290647962224
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "offered_rate",
+      "importance": 0.06603063700759382
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "overdraft_limit_max",
+      "importance": 0.02414032463013641
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "overdraft_limit_min",
+      "importance": 0.012831531411435549
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "cnt_deb_ul_ip_30",
+      "importance": 0.007895772158116196
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "cnt_deb_ul_ip_90",
+      "importance": 0.0049875112563629006
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "db_group_last",
+      "importance": 0.003293225758950146
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "app_term_mean_360",
+      "importance": 0.002453456945454122
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "count_all_corp_dashboard_events",
+      "importance": 0.0018225323160067938
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "sum_deb_ul_90",
+      "importance": 0.0016843530103892097
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "days_from_authperson_registration",
+      "importance": 0.0013446815922882206
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "sum_deb_ul_30",
+      "importance": 0.0012618678698740255
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "fl_adminarea",
+      "importance": 0.000943929218161864
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "cnt_deb_loan_90",
+      "importance": 0.0007626181087984694
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "overdraft_app_term_max_360",
+      "importance": 0.0007060890429718861
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "fl_hdb_bki_total_active_products",
+      "importance": 0.0005110958737358068
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "sum_deb_investment_90",
+      "importance": 0.000375724485585502
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "balance_rur_amt_30_min",
+      "importance": 0.00024363387983493848
+    },
+    {
+      "variant": "all_except_id",
+      "feature": "loan_rev_min_start_fin",
+      "importance": 0.00019783791548073684
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "cb_rate",
+      "importance": 0.6140668702103218
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "offered_rate",
+      "importance": 0.17047860664022443
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "overdraft_limit_max",
+      "importance": 0.08320541958055411
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "overdraft_limit_min",
+      "importance": 0.04383839143103841
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "cnt_deb_ul_ip_30",
+      "importance": 0.02512851847875279
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "cnt_deb_ul_ip_90",
+      "importance": 0.012986938426320534
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "db_group_last",
+      "importance": 0.007242896379078226
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "app_term_mean_360",
+      "importance": 0.006822521870312472
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "sum_deb_ul_90",
+      "importance": 0.006755866231363961
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "sum_deb_ul_30",
+      "importance": 0.005131461867693713
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "count_all_corp_dashboard_events",
+      "importance": 0.004537425975212973
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "cnt_deb_loan_90",
+      "importance": 0.0036383437463298383
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "days_from_authperson_registration",
+      "importance": 0.003012464478841202
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "fl_adminarea",
+      "importance": 0.0025116436448759934
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "fl_hdb_bki_total_active_products",
+      "importance": 0.0020140469234132016
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "loan_rev_min_start_fin",
+      "importance": 0.0016794425154473653
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "corp_list",
+      "importance": 0.0013561802990958625
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "overdraft_app_term_max_360",
+      "importance": 0.0012445077840481167
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "sum_deb_investment_90",
+      "importance": 0.0012120318665166901
+    },
+    {
+      "variant": "no_decision_day",
+      "feature": "p75_time_spent_minutes",
+      "importance": 0.0008991384958824108
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "overdraft_limit_max",
+      "importance": 0.2895955593230213
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "overdraft_limit_min",
+      "importance": 0.19038887948873348
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "cnt_deb_ul_ip_30",
+      "importance": 0.14087839497814775
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "cnt_deb_ul_ip_90",
+      "importance": 0.0748192885104532
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "count_all_corp_dashboard_events",
+      "importance": 0.046152049421963215
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "db_group_last",
+      "importance": 0.03963735516051804
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "app_term_mean_360",
+      "importance": 0.029394992873342657
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "sum_deb_ul_30",
+      "importance": 0.028548066488782147
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "sum_deb_ul_90",
+      "importance": 0.027373257601260175
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "cnt_deb_loan_90",
+      "importance": 0.0204918849269203
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "days_from_authperson_registration",
+      "importance": 0.01743282529245503
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "corp_list",
+      "importance": 0.016021533913558615
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "sum_deb_investment_90",
+      "importance": 0.013408454065229378
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "loan_rev_min_start_fin",
+      "importance": 0.013040128427064515
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "fl_hdb_bki_total_active_products",
+      "importance": 0.012426127510387288
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "overdraft_app_term_max_360",
+      "importance": 0.01094159909103268
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "balance_rur_amt_30_min",
+      "importance": 0.007144800749978382
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "loan_amount_last",
+      "importance": 0.0062510288166492305
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "p75_time_spent_minutes",
+      "importance": 0.005644332934457762
+    },
+    {
+      "variant": "no_day_cb_offered",
+      "feature": "cnt_cred_loan_90",
+      "importance": 0.004294286565513583
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "cnt_deb_ul_ip_30",
+      "importance": 0.2245032163100154
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "cnt_deb_ul_ip_90",
+      "importance": 0.13274830347868882
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "sum_deb_ul_90",
+      "importance": 0.08091341035312283
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "count_all_corp_dashboard_events",
+      "importance": 0.07951297545512544
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "sum_deb_ul_30",
+      "importance": 0.0776050446723819
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "db_group_last",
+      "importance": 0.07291233379558588
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "app_term_mean_360",
+      "importance": 0.059047947390784804
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "cnt_deb_loan_90",
+      "importance": 0.040308252286062565
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "days_from_authperson_registration",
+      "importance": 0.03736234330769249
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "sum_deb_investment_90",
+      "importance": 0.03572183765068134
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "corp_list",
+      "importance": 0.031499914100184996
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "fl_hdb_bki_total_active_products",
+      "importance": 0.0301204456827988
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "loan_rev_min_start_fin",
+      "importance": 0.025632301897745492
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "overdraft_app_term_max_360",
+      "importance": 0.02228691881079115
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "p75_time_spent_minutes",
+      "importance": 0.012829150337423868
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "balance_rur_amt_30_min",
+      "importance": 0.01155083244686309
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "cnt_cred_loan_90",
+      "importance": 0.011125069114161517
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "loan_rev_max_start_non_fin",
+      "importance": 0.0052202055074939135
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "fl_adminarea",
+      "importance": 0.004607988845498483
+    },
+    {
+      "variant": "no_day_rate_limits",
+      "feature": "loan_amount_last",
+      "importance": 0.002291340337812139
+    }
+  ],
+  "verdict": "PASS_WITH_RISKS: use Fold3 / last-period holdout as the main internal score; drift is severe.",
+  "remaining": [
+    "group-aware target-model CV stress test",
+    "seed variance",
+    "small feature ablations measured primarily on Fold3",
+    "red-team review before platform upload"
+  ]
+}

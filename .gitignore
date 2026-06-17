@@ -33,6 +33,7 @@ experiments/runs/*
 submissions/*.csv
 submissions/cards/*
 !submissions/cards/.gitkeep
+!submissions/cards/*.json
 reports/**/*.html
 reports/**/*.png
 reports/**/*.jpg
@@ -46,8 +47,7 @@ reports/**/*.joblib
 *.cbm
 *.model
 *.onnx
-/agents/
 /archives/
-/data/
+/agents/
 /AGENTS.md
 /FILE_MANIFEST.md
