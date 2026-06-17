@@ -374,18 +374,32 @@ def make_time_folds(train: pd.DataFrame, cutoffs: list[str]) -> list[dict[str, A
 
 
 def get_model(model_cfg: dict[str, Any], seed: int) -> CatBoostClassifier:
-    return CatBoostClassifier(
-        loss_function="Logloss",
-        eval_metric="AUC",
-        iterations=int(model_cfg["iterations"]),
-        learning_rate=float(model_cfg["learning_rate"]),
-        depth=int(model_cfg["depth"]),
-        l2_leaf_reg=float(model_cfg["l2_leaf_reg"]),
-        random_seed=seed,
-        auto_class_weights=model_cfg.get("auto_class_weights"),
-        allow_writing_files=False,
-        verbose=model_cfg.get("verbose", False),
-    )
+    params: dict[str, Any] = {
+        "loss_function": "Logloss",
+        "eval_metric": "AUC",
+        "iterations": int(model_cfg["iterations"]),
+        "learning_rate": float(model_cfg["learning_rate"]),
+        "depth": int(model_cfg["depth"]),
+        "l2_leaf_reg": float(model_cfg["l2_leaf_reg"]),
+        "random_seed": seed,
+        "auto_class_weights": model_cfg.get("auto_class_weights"),
+        "allow_writing_files": False,
+        "verbose": model_cfg.get("verbose", False),
+    }
+
+    optional_params = {
+        "random_strength": float,
+        "bagging_temperature": float,
+        "border_count": int,
+        "grow_policy": str,
+        "min_data_in_leaf": int,
+        "max_leaves": int,
+    }
+    for name, caster in optional_params.items():
+        if name in model_cfg and model_cfg[name] is not None:
+            params[name] = caster(model_cfg[name])
+
+    return CatBoostClassifier(**params)
 
 
 def evaluate_time_folds(
