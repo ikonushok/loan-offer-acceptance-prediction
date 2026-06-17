@@ -1,0 +1,3 @@
+column,train_nunique_non_null,test_nunique_non_null,unseen_in_test_count,unseen_in_test_values,missing_train,missing_test,missing_rate_train,missing_rate_test
+db_group_last,9,9,0,,55883,9899,0.38476050151128127,0.27261711327146043
+fl_adminarea,83,80,0,,43310,11514,0.29819403611927764,0.31709399355567186
