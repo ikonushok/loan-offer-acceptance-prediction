@@ -1,0 +1,46 @@
+{
+  "created_at_utc": "2026-06-18T02:39:47.630640+00:00",
+  "config": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/optuna_catboost_context_offer_fold3_hpo_ext1.json",
+  "base_config": "configs/baseline_catboost_time_no_time_context_offer.json",
+  "study_name": "optuna_catboost_context_offer_fold3_hpo_ext1",
+  "validation_level": "L3_partial_fold_only_hpo",
+  "objective_fold": 3,
+  "n_trials_requested": 150,
+  "n_startup_trials": 40,
+  "sampler": {
+    "type": "TPESampler",
+    "multivariate": true,
+    "group": true
+  },
+  "best_trial_number": 66,
+  "best_objective_auc": 0.7535702929506587,
+  "best_iteration": 1572,
+  "best_params": {
+    "iterations": 2268,
+    "learning_rate": 0.009691553508063245,
+    "depth": 7,
+    "l2_leaf_reg": 39.39039136695883,
+    "random_strength": 2.0033719110506105,
+    "bagging_temperature": 2.5370810331539375,
+    "border_count": 254,
+    "auto_class_weights": "SqrtBalanced",
+    "grow_policy": "Depthwise",
+    "min_data_in_leaf": 44
+  },
+  "fixed_model_params": {
+    "loss_function": "Logloss",
+    "eval_metric": "AUC"
+  },
+  "trials_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo_ext1_20260618T023937Z_trials.csv",
+  "visualizations": {
+    "optimization_history": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo_ext1_20260618T023937Z_optimization_history.html",
+    "param_importances": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo_ext1_20260618T023937Z_param_importances.html",
+    "parallel_coordinate": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo_ext1_20260618T023937Z_parallel_coordinate.html",
+    "slice": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo_ext1_20260618T023937Z_slice.html"
+  },
+  "visualization_errors": {},
+  "risks": [
+    "This is fold-only HPO. Top trials must be revalidated on all rolling folds before model selection.",
+    "No public leaderboard was used."
+  ]
+}

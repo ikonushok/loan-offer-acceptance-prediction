@@ -1,0 +1,77 @@
+{
+  "base_config": "configs/diversity_experiments/lgbm_context_offer_unbalanced_v1.json",
+  "out_dir": "reports/validation",
+  "study_name": "optuna_lgbm_context_offer_fold3_hpo100",
+  "storage": "sqlite:///reports/validation/optuna_lgbm_context_offer_fold3_hpo100.db",
+  "load_if_exists": false,
+  "seed": 42,
+  "objective_fold": 3,
+  "n_trials": 100,
+  "n_startup_trials": 30,
+  "timeout_seconds": null,
+  "show_progress_bar": true,
+  "early_stopping_rounds": 150,
+  "sampler": {
+    "type": "TPESampler",
+    "multivariate": true,
+    "group": true
+  },
+  "search_space": {
+    "n_estimators": {
+      "type": "int",
+      "low": 600,
+      "high": 3000
+    },
+    "learning_rate": {
+      "type": "float",
+      "low": 0.006,
+      "high": 0.07,
+      "log": true
+    },
+    "num_leaves": {
+      "type": "int",
+      "low": 15,
+      "high": 127
+    },
+    "min_child_samples": {
+      "type": "int",
+      "low": 30,
+      "high": 250
+    },
+    "subsample": {
+      "type": "float",
+      "low": 0.6,
+      "high": 1.0
+    },
+    "colsample_bytree": {
+      "type": "float",
+      "low": 0.6,
+      "high": 1.0
+    },
+    "reg_alpha": {
+      "type": "float",
+      "low": 0.0,
+      "high": 5.0
+    },
+    "reg_lambda": {
+      "type": "float",
+      "low": 1.0,
+      "high": 60.0,
+      "log": true
+    },
+    "class_weight": {
+      "type": "categorical",
+      "choices": [null, "balanced"]
+    }
+  },
+  "fixed_model_params": {
+    "boosting_type": "gbdt",
+    "objective": "binary",
+    "metric": "auc",
+    "subsample_freq": 1,
+    "min_split_gain": 0.0,
+    "n_jobs": -1,
+    "verbosity": -1
+  },
+  "selection_note": "Fold3 HPO screen only. Top 5-10 trials must be revalidated on all 3 rolling folds before blending. Use baseline_lgbm_time.py for revalidation."
+}

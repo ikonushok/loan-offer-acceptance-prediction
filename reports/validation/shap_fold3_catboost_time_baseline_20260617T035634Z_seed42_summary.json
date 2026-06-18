@@ -1,0 +1,40 @@
+{
+  "created_at_utc": "2026-06-17T03:56:34.381609+00:00",
+  "validation_level": "L3_interpretability_fold_holdout",
+  "config_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/baseline_catboost_time.json",
+  "run_prefix": "catboost_time_baseline",
+  "fold": {
+    "fold": 3,
+    "train_start": "2024-02-01",
+    "train_end": "2025-03-31",
+    "valid_start": "2025-04-01",
+    "valid_end": "2025-06-05",
+    "train_rows": 136520,
+    "valid_rows": 8721,
+    "sample_rows": 3000,
+    "roc_auc": 0.7398583997840398,
+    "best_iteration": 733
+  },
+  "feature_engineering": {
+    "enabled": false
+  },
+  "model_params": {
+    "iterations": 800,
+    "learning_rate": 0.03,
+    "depth": 6,
+    "l2_leaf_reg": 6.0,
+    "auto_class_weights": "Balanced",
+    "verbose": 100
+  },
+  "artifacts": {
+    "importance": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/shap_fold3_catboost_time_baseline_20260617T035634Z_seed42_importance.csv",
+    "sample_rows": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/shap_fold3_catboost_time_baseline_20260617T035634Z_seed42_sample_rows.csv",
+    "feature_manifest": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/shap_fold3_catboost_time_baseline_20260617T035634Z_seed42_feature_manifest.csv",
+    "summary": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/shap_fold3_catboost_time_baseline_20260617T035634Z_seed42_summary.json"
+  },
+  "notes": [
+    "CatBoost native SHAP values were computed on validation fold sample only.",
+    "SHAP is diagnostic and does not replace time-holdout ROC-AUC.",
+    "No target encoding, sample labels, or test labels are used."
+  ]
+}

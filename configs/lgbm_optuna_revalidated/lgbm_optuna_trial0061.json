@@ -1,0 +1,51 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "early_stopping_rounds": 150,
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "sample_weight": {
+    "enabled": false
+  },
+  "run_prefix": "lgbm_optuna_trial0061",
+  "model": {
+    "boosting_type": "gbdt",
+    "objective": "binary",
+    "metric": "auc",
+    "subsample_freq": 1,
+    "min_split_gain": 0.0,
+    "n_jobs": -1,
+    "verbosity": -1,
+    "colsample_bytree": 0.6673593414266651,
+    "learning_rate": 0.0080938017162978,
+    "min_child_samples": 33,
+    "n_estimators": 2285,
+    "num_leaves": 17,
+    "reg_alpha": 3.4493510421129474,
+    "reg_lambda": 6.736064313418301,
+    "subsample": 0.6651610111519282
+  },
+  "diversity_experiment": {
+    "purpose": "LightGBM diversity candidate using same time folds and context-offer features as CatBoost champion.",
+    "selection_gate": "Keep only if it improves constrained blend or shows useful low-correlation Fold3 behavior."
+  },
+  "_hpo_source": {
+    "study_name": "optuna_lgbm_context_offer_fold3_hpo100",
+    "trial_number": 61,
+    "fold_auc": 0.750758
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "run_prefix": "catboost_trial0070_missingflags_v1",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "model": {
+    "iterations": 1347,
+    "learning_rate": 0.0207102246213281,
+    "depth": 6,
+    "l2_leaf_reg": 4.71255063500703,
+    "auto_class_weights": "SqrtBalanced",
+    "verbose": 100,
+    "bagging_temperature": 0.2762006775607772,
+    "border_count": 128,
+    "grow_policy": "Depthwise",
+    "min_data_in_leaf": 79,
+    "random_strength": 1.269328964812104
+  },
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": true,
+    "add_context_offer_features": true
+  },
+  "excluded_features": [],
+  "experiment_note": "Trial0070 champion params, CLEAN missing-flags test (no time features). Prior missing-flags ablation was contaminated with time_features=true."
+}

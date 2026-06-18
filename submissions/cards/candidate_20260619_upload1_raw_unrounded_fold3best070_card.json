@@ -1,0 +1,98 @@
+{
+  "created_at_utc": "2026-06-17T22:58:09.838263+00:00",
+  "validation_level": "L5_partial_test_only_format_check",
+  "verdict": "PASS_WITH_RISKS",
+  "upload_recommendation": "Candidate for first upload after daily platform reset if no stronger offline candidate is produced before upload.",
+  "daily_upload_plan": {
+    "planned_upload_date_local": "2026-06-19",
+    "slot": 1,
+    "max_daily_uploads": 3,
+    "stop_rule": "Stop after this upload unless public score materially improves or a new candidate has stronger Fold3/late-holdout evidence."
+  },
+  "artifacts": {
+    "submission": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260619_upload1_raw_unrounded_fold3best070.csv",
+    "card": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/cards/candidate_20260619_upload1_raw_unrounded_fold3best070_card.json",
+    "source_submission": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/submission.csv",
+    "source_run_dir": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z"
+  },
+  "hashes": {
+    "submission_sha256": "ba3b32669f7afb8ca5cc186de46292e3084e69776d9a2592314c6ea777fbb627",
+    "source_submission_sha256": "ba3b32669f7afb8ca5cc186de46292e3084e69776d9a2592314c6ea777fbb627",
+    "train_sha256": "988e874ae9a877642537822ae5399435839799c32fded503feff7ccdf88506d7",
+    "test_sha256": "74f788c6d38a4ce2784804446d8a257715138aaa43580035bcbe59765c890904",
+    "sample_sha256": "ea2e7721fd1a68386145c838fd847009ad1564c77ca49a416bd5a6c638068164"
+  },
+  "data_contract": {
+    "policy": "test_only",
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "submission_rows": 36311,
+    "test_rows": 36311,
+    "sample_rows": 45032,
+    "sample_extra_not_in_test": 8721,
+    "test_missing_from_sample": 0,
+    "front_id_order_matches_test": true,
+    "front_id_unique": true,
+    "target_min": 0.0018783740617264,
+    "target_mean": 0.2372941939532488,
+    "target_max": 0.9768421550242024,
+    "target_unique": 35563,
+    "target_nan": 0,
+    "target_inf": 0
+  },
+  "source_run": {
+    "run_id": "blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+    "blend_type": "raw_probability_blend",
+    "weights": {
+      "fold3best": 0.7,
+      "t041": 0.04,
+      "t164": 0.26
+    },
+    "fold_metrics": [
+      {
+        "fold": "1",
+        "valid_rows": 7612,
+        "valid_positive_rate": 0.1075932737782448,
+        "roc_auc": 0.7959514274102821
+      },
+      {
+        "fold": "2",
+        "valid_rows": 5053,
+        "valid_positive_rate": 0.0932119532950722,
+        "roc_auc": 0.7926845655620952
+      },
+      {
+        "fold": "3",
+        "valid_rows": 8721,
+        "valid_positive_rate": 0.0784313725490196,
+        "roc_auc": 0.7548003495529084
+      },
+      {
+        "fold": "OOF_TIME_HOLDOUT",
+        "valid_rows": 21386,
+        "valid_positive_rate": 0.0923033760404002,
+        "roc_auc": 0.7811396573965571
+      }
+    ],
+    "public_score_reference": {
+      "rounded_1dp_auc_percent": 75.448,
+      "rounded_2dp_auc_percent": 76.013,
+      "rounded_3dp_auc_percent": 76.054,
+      "best_accepted_file": "submissions/accepted_public_76054_3dp_fold3best070.csv",
+      "best_accepted_sha256": "31947b3e73ba8e9fb00422385d010504adc085fe3dff53e19f9182abca6ab388"
+    }
+  },
+  "rationale": [
+    "Same source ranking as accepted 3dp candidate, but raw unrounded probabilities reduce ROC-AUC ties.",
+    "Local OOF rounding check showed 1dp materially hurts ROC-AUC; raw/3dp are effectively tied locally but raw is theoretically preferable for AUC.",
+    "No test labels or sample target values were used."
+  ],
+  "risks": [
+    "Expected gain over accepted 3dp candidate may be small because 3dp already preserves most ranking information.",
+    "Public leaderboard may not reward raw over 3dp if platform internally rounds or bins scores.",
+    "Sample submission has 8721 extra non-test IDs; current working policy is test-only rows, already accepted by prior uploads.",
+    "This does not close the full gap to 0.775078; it is a safe first upload candidate, not a new modeling breakthrough."
+  ]
+}

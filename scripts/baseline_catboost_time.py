@@ -82,6 +82,8 @@ def add_label_free_features(
     test_x: pd.DataFrame,
     categorical_cols: list[str],
     feature_engineering_cfg: dict[str, Any],
+    train_context_extra: pd.DataFrame | None = None,
+    test_context_extra: pd.DataFrame | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
     """Add label-free derived features using train/test raw columns only.
 
@@ -97,20 +99,46 @@ def add_label_free_features(
         test_x[name] = test_values.replace([np.inf, -np.inf], np.nan)
         derived_features.append(name)
 
+    rate_limit_specs = [
+        ("rate_spread", "offered_rate", "cb_rate", "diff"),
+        ("rate_ratio", "offered_rate", "cb_rate", "ratio"),
+        ("overdraft_limit_spread", "overdraft_limit_max", "overdraft_limit_min", "diff"),
+        ("loan_amount_to_limit_min", "loan_amount_last", "overdraft_limit_min", "ratio"),
+        ("loan_amount_to_limit_max", "loan_amount_last", "overdraft_limit_max", "ratio"),
+    ]
+    activity_specs = [
+        ("sum_deb_ul_30_to_90", "sum_deb_ul_30", "sum_deb_ul_90", "ratio"),
+        ("cnt_deb_ul_ip_30_to_90", "cnt_deb_ul_ip_30", "cnt_deb_ul_ip_90", "ratio"),
+        ("cnt_cred_to_deb_loan_90", "cnt_cred_loan_90", "cnt_deb_loan_90", "ratio"),
+        ("overdraft_term_to_app_term_360", "overdraft_app_term_max_360", "app_term_mean_360", "ratio"),
+        ("balance_to_loan_amount", "balance_rur_amt_30_min", "loan_amount_last", "ratio"),
+        ("time_spent_per_dashboard_event", "p75_time_spent_minutes", "count_all_corp_dashboard_events", "ratio"),
+    ]
+
+    if feature_engineering_cfg.get("add_rate_limit_features", False):
+        paired_specs = rate_limit_specs
+        for name, left, right, op in paired_specs:
+            if left not in train_x.columns or right not in train_x.columns:
+                continue
+            if op == "diff":
+                add_feature(name, train_x[left] - train_x[right], test_x[left] - test_x[right])
+            elif op == "ratio":
+                add_feature(name, safe_divide(train_x[left], train_x[right]), safe_divide(test_x[left], test_x[right]))
+
+        if {"overdraft_limit_min", "overdraft_limit_max"}.issubset(train_x.columns):
+            add_feature(
+                "overdraft_limit_mid",
+                (train_x["overdraft_limit_min"] + train_x["overdraft_limit_max"]) / 2.0,
+                (test_x["overdraft_limit_min"] + test_x["overdraft_limit_max"]) / 2.0,
+            )
+            add_feature(
+                "loan_amount_to_limit_mid",
+                safe_divide(train_x["loan_amount_last"], train_x["overdraft_limit_mid"]),
+                safe_divide(test_x["loan_amount_last"], test_x["overdraft_limit_mid"]),
+            )
+
     if feature_engineering_cfg.get("add_pairwise_features", True):
-        paired_specs = [
-            ("rate_spread", "offered_rate", "cb_rate", "diff"),
-            ("rate_ratio", "offered_rate", "cb_rate", "ratio"),
-            ("overdraft_limit_spread", "overdraft_limit_max", "overdraft_limit_min", "diff"),
-            ("loan_amount_to_limit_min", "loan_amount_last", "overdraft_limit_min", "ratio"),
-            ("loan_amount_to_limit_max", "loan_amount_last", "overdraft_limit_max", "ratio"),
-            ("sum_deb_ul_30_to_90", "sum_deb_ul_30", "sum_deb_ul_90", "ratio"),
-            ("cnt_deb_ul_ip_30_to_90", "cnt_deb_ul_ip_30", "cnt_deb_ul_ip_90", "ratio"),
-            ("cnt_cred_to_deb_loan_90", "cnt_cred_loan_90", "cnt_deb_loan_90", "ratio"),
-            ("overdraft_term_to_app_term_360", "overdraft_app_term_max_360", "app_term_mean_360", "ratio"),
-            ("balance_to_loan_amount", "balance_rur_amt_30_min", "loan_amount_last", "ratio"),
-            ("time_spent_per_dashboard_event", "p75_time_spent_minutes", "count_all_corp_dashboard_events", "ratio"),
-        ]
+        paired_specs = rate_limit_specs + activity_specs
 
         for name, left, right, op in paired_specs:
             if left not in train_x.columns or right not in train_x.columns:
@@ -181,6 +209,73 @@ def add_label_free_features(
 
             add_context_features(train_x, train_context_sig)
             add_context_features(test_x, test_context_sig)
+            derived_features.extend(context_feature_names)
+
+    if feature_engineering_cfg.get("add_same_day_context_offer_features", False):
+        offer_cols = ["offered_rate", "overdraft_limit_min", "overdraft_limit_max"]
+        pre_context_derived_features = set(derived_features)
+        context_cols = [
+            c
+            for c in train_x.columns
+            if c not in offer_cols and c not in pre_context_derived_features and not c.endswith("_is_missing")
+        ]
+
+        if train_context_extra is None or test_context_extra is None:
+            raise ValueError("same-day context features require raw decision_day context extras")
+        if DAY_COL not in train_context_extra.columns or DAY_COL not in test_context_extra.columns:
+            raise ValueError(f"same-day context features require {DAY_COL}")
+
+        if all(c in train_x.columns for c in offer_cols) and context_cols:
+            train_context_frame = train_x[context_cols].copy()
+            test_context_frame = test_x[context_cols].copy()
+            train_context_frame[f"__context_{DAY_COL}"] = pd.to_datetime(
+                train_context_extra[DAY_COL], errors="raise"
+            ).dt.strftime("%Y-%m-%d")
+            test_context_frame[f"__context_{DAY_COL}"] = pd.to_datetime(
+                test_context_extra[DAY_COL], errors="raise"
+            ).dt.strftime("%Y-%m-%d")
+
+            train_context_sig = pd.util.hash_pandas_object(train_context_frame, index=False)
+            test_context_sig = pd.util.hash_pandas_object(test_context_frame, index=False)
+
+            context_feature_names = ["same_day_context_offer_count"]
+            for col in offer_cols:
+                context_feature_names.extend(
+                    [
+                        f"{col}_same_day_context_spread",
+                        f"{col}_minus_same_day_context_min",
+                        f"{col}_minus_same_day_context_mean",
+                        f"{col}_rank_pct_in_same_day_context",
+                        f"{col}_is_same_day_context_min",
+                        f"{col}_is_same_day_context_max",
+                    ]
+                )
+
+            def add_same_day_context_features(df: pd.DataFrame, sig: pd.Series) -> None:
+                group_size = sig.map(sig.value_counts()).astype("int32")
+                df["same_day_context_offer_count"] = group_size
+
+                for col in offer_cols:
+                    grouped = df.groupby(sig, dropna=False)[col]
+                    group_min = grouped.transform("min")
+                    group_max = grouped.transform("max")
+                    group_mean = grouped.transform("mean")
+                    rank_pct = grouped.rank(method="average", pct=True)
+
+                    new_cols = {
+                        f"{col}_same_day_context_spread": group_max - group_min,
+                        f"{col}_minus_same_day_context_min": df[col] - group_min,
+                        f"{col}_minus_same_day_context_mean": df[col] - group_mean,
+                        f"{col}_rank_pct_in_same_day_context": rank_pct,
+                        f"{col}_is_same_day_context_min": (df[col] == group_min).astype("int8"),
+                        f"{col}_is_same_day_context_max": (df[col] == group_max).astype("int8"),
+                    }
+
+                    for name, values in new_cols.items():
+                        df[name] = values.replace([np.inf, -np.inf], np.nan)
+
+            add_same_day_context_features(train_x, train_context_sig)
+            add_same_day_context_features(test_x, test_context_sig)
             derived_features.extend(context_feature_names)
 
     if feature_engineering_cfg.get("add_missing_flags", True):
@@ -262,6 +357,8 @@ def prepare_features(
         test_x=test_x,
         categorical_cols=categorical_cols,
         feature_engineering_cfg=feature_engineering_cfg,
+        train_context_extra=train[[DAY_COL]].copy(),
+        test_context_extra=test[[DAY_COL]].copy(),
     )
 
     if list(train_x.columns) != list(test_x.columns):
@@ -373,6 +470,63 @@ def make_time_folds(train: pd.DataFrame, cutoffs: list[str]) -> list[dict[str, A
     return folds
 
 
+def make_sample_weights(train: pd.DataFrame, sample_weight_cfg: dict[str, Any] | None) -> pd.Series | None:
+    """Build label-free training sample weights from decision_day only."""
+    if not sample_weight_cfg or not sample_weight_cfg.get("enabled", False):
+        return None
+
+    strategy = sample_weight_cfg.get("strategy")
+    days = pd.to_datetime(train[DAY_COL], errors="raise")
+    weights = pd.Series(np.ones(len(train), dtype=float), index=train.index, name="sample_weight")
+
+    if strategy == "adversarial_file":
+        # Label-free density-ratio weights precomputed by compute_adversarial_weights.py.
+        weights_path = resolve_path(sample_weight_cfg["weights_path"], Path(__file__).resolve().parents[1])
+        wdf = pd.read_csv(weights_path)
+        wmap = dict(zip(wdf[ID_COL], wdf["sample_weight"]))
+        mapped = train[ID_COL].map(wmap)
+        if mapped.isna().any():
+            raise ValueError(f"{int(mapped.isna().sum())} train front_id missing from {weights_path}")
+        weights = pd.Series(mapped.to_numpy(dtype=float), index=train.index, name="sample_weight")
+    elif strategy == "linear_recency":
+        min_weight = float(sample_weight_cfg.get("min_weight", 0.5))
+        max_weight = float(sample_weight_cfg.get("max_weight", 1.5))
+        span = max((days.max() - days.min()).days, 1)
+        recency = (days - days.min()).dt.days.astype(float) / span
+        weights = min_weight + recency * (max_weight - min_weight)
+    elif strategy == "exponential_recency":
+        half_life_days = float(sample_weight_cfg.get("half_life_days", 120.0))
+        min_weight = float(sample_weight_cfg.get("min_weight", 0.25))
+        age_days = (days.max() - days).dt.days.astype(float)
+        weights = np.power(0.5, age_days / half_life_days)
+        weights = pd.Series(np.maximum(weights, min_weight), index=train.index, name="sample_weight")
+    elif strategy == "recent_period_boost":
+        cutoff = pd.Timestamp(sample_weight_cfg["cutoff"])
+        recent_weight = float(sample_weight_cfg.get("recent_weight", 2.0))
+        older_weight = float(sample_weight_cfg.get("older_weight", 1.0))
+        weights = pd.Series(
+            np.where(days >= cutoff, recent_weight, older_weight),
+            index=train.index,
+            name="sample_weight",
+        )
+    else:
+        raise ValueError(f"Unsupported sample weight strategy: {strategy}")
+
+    normalize_mean = bool(sample_weight_cfg.get("normalize_mean", True))
+    if normalize_mean:
+        mean_weight = float(weights.mean())
+        if mean_weight <= 0 or not np.isfinite(mean_weight):
+            raise ValueError("Sample weights have invalid mean")
+        weights = weights / mean_weight
+
+    if not np.isfinite(weights).all():
+        raise ValueError("Sample weights contain NaN or inf")
+    if (weights <= 0).any():
+        raise ValueError("Sample weights must be positive")
+
+    return pd.Series(weights, index=train.index, name="sample_weight")
+
+
 def get_model(model_cfg: dict[str, Any], seed: int) -> CatBoostClassifier:
     params: dict[str, Any] = {
         "loss_function": "Logloss",
@@ -409,6 +563,7 @@ def evaluate_time_folds(
     folds: list[dict[str, Any]],
     model_cfg: dict[str, Any],
     seed: int,
+    sample_weights: pd.Series | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     cat_features = [train_x.columns.get_loc(c) for c in categorical_cols]
 
@@ -443,6 +598,7 @@ def evaluate_time_folds(
         train_pool = Pool(
             train_x.iloc[train_idx],
             label=y_train,
+            weight=None if sample_weights is None else sample_weights.iloc[train_idx],
             cat_features=cat_features,
         )
         valid_pool = Pool(
@@ -517,10 +673,11 @@ def train_full_and_predict_test(
     categorical_cols: list[str],
     model_cfg: dict[str, Any],
     seed: int,
+    sample_weights: pd.Series | None = None,
 ) -> pd.Series:
     cat_features = [train_x.columns.get_loc(c) for c in categorical_cols]
 
-    train_pool = Pool(train_x, label=y, cat_features=cat_features)
+    train_pool = Pool(train_x, label=y, weight=sample_weights, cat_features=cat_features)
     test_pool = Pool(test_x, cat_features=cat_features)
 
     log(f"Training final model on full train: rows={len(train_x)}, features={train_x.shape[1]}")
@@ -590,6 +747,7 @@ def main() -> None:
     feature_engineering_cfg = cfg.get("feature_engineering", {"enabled": False})
     time_features_cfg = cfg.get("time_features", {"enabled": True})
     excluded_features = cfg.get("excluded_features", [])
+    sample_weight_cfg = cfg.get("sample_weight", {"enabled": False})
     train_x, test_x, y, categorical_cols, feature_cols, feature_manifest = prepare_features(
         train,
         test,
@@ -598,6 +756,17 @@ def main() -> None:
         excluded_features=excluded_features,
     )
     log(f"Prepared features: count={len(feature_cols)}, categorical={categorical_cols}")
+
+    sample_weights = make_sample_weights(train, sample_weight_cfg)
+    if sample_weights is not None:
+        log(
+            "Sample weights: strategy={strategy}, min={min_weight:.6f}, mean={mean_weight:.6f}, max={max_weight:.6f}".format(
+                strategy=sample_weight_cfg.get("strategy"),
+                min_weight=float(sample_weights.min()),
+                mean_weight=float(sample_weights.mean()),
+                max_weight=float(sample_weights.max()),
+            )
+        )
 
     folds = make_time_folds(train, cfg["cutoffs"])
     if not folds:
@@ -610,6 +779,7 @@ def main() -> None:
         folds=folds,
         model_cfg=model_cfg,
         seed=seed,
+        sample_weights=sample_weights,
     )
 
     test_pred = train_full_and_predict_test(
@@ -619,6 +789,7 @@ def main() -> None:
         categorical_cols=categorical_cols,
         model_cfg=model_cfg,
         seed=seed,
+        sample_weights=sample_weights,
     )
 
     log("Writing artifacts")
@@ -646,6 +817,14 @@ def main() -> None:
         "params": model_cfg,
         "feature_engineering": feature_engineering_cfg,
         "time_features": time_features_cfg,
+        "sample_weight": sample_weight_cfg,
+        "sample_weight_stats": None
+        if sample_weights is None
+        else {
+            "min": float(sample_weights.min()),
+            "mean": float(sample_weights.mean()),
+            "max": float(sample_weights.max()),
+        },
         "train_path": str(train_path),
         "test_path": str(test_path),
         "train_sha256": sha256_file(train_path),

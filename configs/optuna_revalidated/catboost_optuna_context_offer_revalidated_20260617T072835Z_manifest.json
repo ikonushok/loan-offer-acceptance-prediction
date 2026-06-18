@@ -1,0 +1,201 @@
+{
+  "created_at_utc": "2026-06-17T07:28:35.448206+00:00",
+  "validation_level": "L0_config_generation",
+  "source": "scripts/optuna_catboost_time.py --export-top-configs",
+  "study_name": "optuna_catboost_context_offer_fold3_hpo200",
+  "trials_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo200_20260617T072558Z_trials.csv",
+  "base_config": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/baseline_catboost_time_no_time_context_offer.json",
+  "top_n": 10,
+  "export_seed": 42,
+  "export_run_prefix": "catboost_optuna_context_offer_revalidated",
+  "created_configs": [
+    {
+      "rank": 1,
+      "trial_number": 144,
+      "objective_auc": 0.7529394387216434,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0144_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0144",
+      "params": {
+        "auto_class_weights": "Balanced",
+        "bagging_temperature": 2.1488010813076404,
+        "border_count": 64,
+        "depth": 5,
+        "grow_policy": "Depthwise",
+        "iterations": 1141,
+        "l2_leaf_reg": 39.793937907266965,
+        "learning_rate": 0.0227996695582819,
+        "min_data_in_leaf": 94.0,
+        "random_strength": 3.1886577845151636
+      }
+    },
+    {
+      "rank": 2,
+      "trial_number": 157,
+      "objective_auc": 0.7528248371748499,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0157_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0157",
+      "params": {
+        "auto_class_weights": "SqrtBalanced",
+        "bagging_temperature": 0.3284021575893016,
+        "border_count": 64,
+        "depth": 6,
+        "grow_policy": "Depthwise",
+        "iterations": 913,
+        "l2_leaf_reg": 59.02644996421859,
+        "learning_rate": 0.027402959328354,
+        "min_data_in_leaf": 71.0,
+        "random_strength": 2.2919843624374923
+      }
+    },
+    {
+      "rank": 3,
+      "trial_number": 70,
+      "objective_auc": 0.7524366471734893,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0070_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0070",
+      "params": {
+        "auto_class_weights": "SqrtBalanced",
+        "bagging_temperature": 0.2762006775607772,
+        "border_count": 128,
+        "depth": 6,
+        "grow_policy": "Depthwise",
+        "iterations": 1347,
+        "l2_leaf_reg": 4.71255063500703,
+        "learning_rate": 0.0207102246213281,
+        "min_data_in_leaf": 79.0,
+        "random_strength": 1.269328964812104
+      }
+    },
+    {
+      "rank": 4,
+      "trial_number": 164,
+      "objective_auc": 0.7519072971716338,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0164_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0164",
+      "params": {
+        "auto_class_weights": "SqrtBalanced",
+        "bagging_temperature": 0.7406558814849078,
+        "border_count": 128,
+        "depth": 7,
+        "grow_policy": "Depthwise",
+        "iterations": 1947,
+        "l2_leaf_reg": 16.035682058357335,
+        "learning_rate": 0.0462974790676006,
+        "min_data_in_leaf": 46.0,
+        "random_strength": 0.6587669902949577
+      }
+    },
+    {
+      "rank": 5,
+      "trial_number": 33,
+      "objective_auc": 0.7518683690271675,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0033_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0033",
+      "params": {
+        "auto_class_weights": "Balanced",
+        "bagging_temperature": 0.2265200488602226,
+        "border_count": 254,
+        "depth": 6,
+        "grow_policy": "SymmetricTree",
+        "iterations": 959,
+        "l2_leaf_reg": 12.447284667205643,
+        "learning_rate": 0.0198526440729557,
+        "random_strength": 1.8714317170752783
+      }
+    },
+    {
+      "rank": 6,
+      "trial_number": 115,
+      "objective_auc": 0.7515387531497234,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0115_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0115",
+      "params": {
+        "auto_class_weights": "Balanced",
+        "bagging_temperature": 0.1595704620864398,
+        "border_count": 254,
+        "depth": 5,
+        "grow_policy": "Depthwise",
+        "iterations": 1377,
+        "l2_leaf_reg": 5.545838058170819,
+        "learning_rate": 0.0230640263363452,
+        "min_data_in_leaf": 66.0,
+        "random_strength": 0.4099600803738089
+      }
+    },
+    {
+      "rank": 7,
+      "trial_number": 102,
+      "objective_auc": 0.7514965506753488,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0102_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0102",
+      "params": {
+        "auto_class_weights": "Balanced",
+        "bagging_temperature": 0.0566671552870594,
+        "border_count": 254,
+        "depth": 6,
+        "grow_policy": "SymmetricTree",
+        "iterations": 1701,
+        "l2_leaf_reg": 3.943326661599709,
+        "learning_rate": 0.0263971431869941,
+        "random_strength": 2.591828575613574
+      }
+    },
+    {
+      "rank": 8,
+      "trial_number": 41,
+      "objective_auc": 0.7512811725302638,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0041_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0041",
+      "params": {
+        "auto_class_weights": "SqrtBalanced",
+        "bagging_temperature": 4.816112697203057,
+        "border_count": 64,
+        "depth": 5,
+        "grow_policy": "Depthwise",
+        "iterations": 2144,
+        "l2_leaf_reg": 35.03487931972861,
+        "learning_rate": 0.017545106180058,
+        "min_data_in_leaf": 114.0,
+        "random_strength": 0.1789962812672148
+      }
+    },
+    {
+      "rank": 9,
+      "trial_number": 32,
+      "objective_auc": 0.751126187581267,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0032_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0032",
+      "params": {
+        "auto_class_weights": "Balanced",
+        "bagging_temperature": 0.0719674431487793,
+        "border_count": 254,
+        "depth": 5,
+        "grow_policy": "SymmetricTree",
+        "iterations": 1618,
+        "l2_leaf_reg": 4.295099841438542,
+        "learning_rate": 0.0192686784623875,
+        "random_strength": 3.769178562542153
+      }
+    },
+    {
+      "rank": 10,
+      "trial_number": 129,
+      "objective_auc": 0.7510308681994896,
+      "config_path": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0129_20260617T072835Z.json",
+      "run_prefix": "catboost_optuna_context_offer_revalidated_trial0129",
+      "params": {
+        "auto_class_weights": "Balanced",
+        "bagging_temperature": 2.9997086859795443,
+        "border_count": 64,
+        "depth": 4,
+        "grow_policy": "Depthwise",
+        "iterations": 1398,
+        "l2_leaf_reg": 16.99938442562403,
+        "learning_rate": 0.0126440970718813,
+        "min_data_in_leaf": 83.0,
+        "random_strength": 2.7817425152977657
+      }
+    }
+  ],
+  "next_step": "Run scripts/baseline_catboost_time.py --config <config_path> for each created config to perform full 3-fold revalidation."
+}

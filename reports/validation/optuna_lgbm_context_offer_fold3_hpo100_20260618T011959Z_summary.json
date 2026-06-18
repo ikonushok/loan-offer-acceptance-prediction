@@ -1,0 +1,46 @@
+{
+  "created_at_utc": "2026-06-18T01:19:59.182282+00:00",
+  "config": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/optuna_lgbm_context_offer_fold3_hpo100.json",
+  "base_config": "configs/diversity_experiments/lgbm_context_offer_unbalanced_v1.json",
+  "study_name": "optuna_lgbm_context_offer_fold3_hpo100",
+  "validation_level": "L3_partial_fold_only_hpo",
+  "objective_fold": 3,
+  "n_trials_requested": 100,
+  "n_trials_completed": 100,
+  "n_startup_trials": 30,
+  "sampler": {
+    "type": "TPESampler",
+    "multivariate": true,
+    "group": true
+  },
+  "best_trial_number": 91,
+  "best_objective_auc": 0.7520424542339632,
+  "best_iteration": 1190,
+  "best_params": {
+    "n_estimators": 1853,
+    "learning_rate": 0.011668975114885275,
+    "num_leaves": 27,
+    "min_child_samples": 228,
+    "subsample": 0.6140681919298736,
+    "colsample_bytree": 0.6297992689629383,
+    "reg_alpha": 4.20120243482842,
+    "reg_lambda": 1.1784969734840463,
+    "class_weight": null
+  },
+  "fixed_model_params": {
+    "boosting_type": "gbdt",
+    "objective": "binary",
+    "metric": "auc",
+    "subsample_freq": 1,
+    "min_split_gain": 0.0,
+    "n_jobs": -1,
+    "verbosity": -1
+  },
+  "train_sha256": "988e874ae9a877642537822ae5399435839799c32fded503feff7ccdf88506d7",
+  "test_sha256": "74f788c6d38a4ce2784804446d8a257715138aaa43580035bcbe59765c890904",
+  "trials_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_lgbm_context_offer_fold3_hpo100_20260618T011959Z_trials.csv",
+  "risks": [
+    "This is fold-only HPO. Top trials must be revalidated on all rolling folds before model selection.",
+    "No public leaderboard was used."
+  ]
+}

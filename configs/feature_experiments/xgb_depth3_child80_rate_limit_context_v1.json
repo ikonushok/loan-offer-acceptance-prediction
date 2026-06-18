@@ -1,0 +1,39 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_rate_limit_features": true,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "sample_weight": {
+    "enabled": false
+  },
+  "run_prefix": "xgb_depth3_child80_rate_limit_context_v1",
+  "model": {
+    "n_estimators": 1400,
+    "learning_rate": 0.025,
+    "max_depth": 3,
+    "min_child_weight": 80,
+    "subsample": 0.85,
+    "colsample_bytree": 0.85,
+    "reg_alpha": 0.5,
+    "reg_lambda": 30.0,
+    "gamma": 0.0,
+    "max_cat_to_onehot": 8,
+    "early_stopping_rounds": 100
+  },
+  "experiment_note": "XGBoost best HPO config (depth3_child80_reg30) with rate/limit economics added. Tests if explicit ratios help XGB which lacks CatBoost's internal quantile splits."
+}

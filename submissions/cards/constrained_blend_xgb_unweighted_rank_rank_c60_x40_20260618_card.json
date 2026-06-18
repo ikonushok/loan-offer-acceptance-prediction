@@ -1,0 +1,42 @@
+{
+  "created_at_utc": "2026-06-18T00:30:22.862559+00:00",
+  "validation_level": "L4_constrained_blend_gate",
+  "verdict": "PASS_WITH_RISKS",
+  "submission": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/constrained_blend_xgb_unweighted_rank_rank_c60_x40_20260618.csv",
+  "sha256": "db380d8097f006c7fb21dc92173b47cd2d912012d55a10ac23eaa0a5eb75110b",
+  "blend": {
+    "champion_run": "blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+    "candidate_run": "xgb_context_offer_unweighted_v1_20260617T232530Z_seed42",
+    "candidate_key": "xgb_unweighted_rank",
+    "blend_mode": "rank",
+    "w_champion": 0.6,
+    "w_candidate": 0.4
+  },
+  "fold_metrics": {
+    "fold1": 0.7964456336309714,
+    "fold2": 0.7947287039379609,
+    "fold3": 0.7560385010263205,
+    "oof": 0.7812726322054836,
+    "fold3_delta_vs_champion": 0.001238151473412108
+  },
+  "late_holdout": {
+    "lh_mean": 0.7631764976756408,
+    "lh_min": 0.7552733992710614,
+    "lh_mean_delta": 0.0029926836990187278,
+    "lh_min_delta": 0.00202435446585858
+  },
+  "gates_passed": {
+    "fold3_gate": true,
+    "lh_gate": true
+  },
+  "champion_public_auc": 0.76054,
+  "data_contract": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_unique": true,
+    "target_nan": 0
+  }
+}

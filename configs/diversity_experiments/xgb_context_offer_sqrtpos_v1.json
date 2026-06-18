@@ -1,0 +1,42 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "sample_weight": {
+    "enabled": false
+  },
+  "run_prefix": "xgb_context_offer_sqrtpos_v1",
+  "model": {
+    "n_estimators": 1200,
+    "learning_rate": 0.025,
+    "max_depth": 4,
+    "min_child_weight": 80,
+    "subsample": 0.85,
+    "colsample_bytree": 0.85,
+    "reg_alpha": 0.5,
+    "reg_lambda": 20.0,
+    "gamma": 0.0,
+    "max_cat_to_onehot": 8,
+    "early_stopping_rounds": 100,
+    "scale_pos_weight": 3.927
+  },
+  "diversity_experiment": {
+    "purpose": "XGBoost diversity candidate using same time folds and context-offer features as CatBoost champion.",
+    "selection_gate": "Keep only if constrained blend improves Fold3 and OOF."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "created_at_utc": "2026-06-18T00:24:55.028962+00:00",
+  "validation_level": "L4_constrained_blend_gate",
+  "verdict": "PASS_WITH_RISKS",
+  "submission": "/sessions/upbeat-quirky-johnson/mnt/loan-offer-acceptance-prediction/submissions/constrained_blend_xgb_unweighted_raw_c50_x50_20260618.csv",
+  "sha256": "7338901f93ced396bff176e1b0d4a4f34fc214cc9c646d1fe8539b1e8d5f8bc2",
+  "blend": {
+    "champion_run": "blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+    "candidate_run": "xgb_context_offer_unweighted_v1_20260617T232530Z_seed42",
+    "candidate_key": "xgb_unweighted",
+    "blend_mode": "raw",
+    "w_champion": 0.5,
+    "w_candidate": 0.5
+  },
+  "fold_metrics": {
+    "fold1": 0.7965774758796987,
+    "fold2": 0.7947270821575425,
+    "fold3": 0.7559374515672035,
+    "oof": 0.7821923387511793,
+    "fold3_delta_vs_champion": 0.001137102014295066
+  },
+  "late_holdout": {
+    "lh_mean": 0.7626359881915054,
+    "lh_min": 0.7550079056876565,
+    "lh_mean_delta": 0.002452174214883307,
+    "lh_min_delta": 0.0017588608824536944
+  },
+  "gates_passed": {
+    "fold3_gate": true,
+    "lh_gate": true
+  },
+  "champion_public_auc": 0.76054,
+  "data_contract": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_unique": true,
+    "target_nan": 0
+  }
+}

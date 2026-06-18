@@ -1,0 +1,54 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260619_upload2_RETEST_xgb_hpo_rank_c51_x49.csv",
+  "sha256": "509ca6811e9515b355d0a07978a3f3b000acaae9d795a9466fb3a3b2c43da4fa",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "run_id": "blend_xgb_hpo_rank_c51_x49_20260618T2354Z",
+    "script": "ad-hoc rank blend from source run predictions",
+    "source_runs": {
+      "accepted_champion": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+      "xgb_hpo": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_depth3_child80_reg30_v1_20260617T235100Z_seed42"
+    },
+    "weights": {
+      "accepted_champion_blend_ext_raw_fold3best070": 0.51,
+      "xgb_hpo_depth3_child80_reg30": 0.49
+    }
+  },
+  "cv_metrics": {
+    "fold1_auc": 0.7966634833998296,
+    "fold2_auc": 0.7941854074978152,
+    "fold3_auc_primary": 0.7567456653329231,
+    "oof_auc": 0.7822344324351747
+  },
+  "baselines": {
+    "accepted_3dp_public_auc": 0.76054,
+    "accepted_champion_local_fold3_auc": 0.7548,
+    "accepted_champion_local_oof_auc": 0.78114,
+    "xgb_hpo_standalone_fold3_auc": 0.75503,
+    "xgb_hpo_standalone_oof_auc": 0.779816
+  },
+  "late_holdout_xgb_component": {
+    "run": "reports/validation/late_holdouts/late_holdouts_xgb_hpo_depth3_child80_reg30_v1_20260617T235308Z",
+    "H1_auc": 0.765375,
+    "H2_auc": 0.75503,
+    "H3_auc": 0.76946,
+    "mean_auc": 0.763289,
+    "min_auc": 0.75503
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "probability_range_ok": true,
+    "unique_predictions": 35415
+  },
+  "upload_recommendation": "Use as tomorrow upload #2 only after upload #1 raw accepted-champion is evaluated, or if two uploads are intentionally spent.",
+  "known_risks": [
+    "Public LB has strong temporal/test drift; local CV improvements may not transfer one-to-one.",
+    "Blend weight selected by validation/Fold3, not by private leaderboard.",
+    "Rank transform optimizes ordering and discards calibration scale; acceptable for ROC-AUC."
+  ]
+}

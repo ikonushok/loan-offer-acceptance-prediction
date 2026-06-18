@@ -1,0 +1,68 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "run_prefix": "catboost_trial0144_recency_linear_mild_v1",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "model": {
+    "iterations": 1141,
+    "learning_rate": 0.0227996695582819,
+    "depth": 5,
+    "l2_leaf_reg": 39.793937907266965,
+    "auto_class_weights": "Balanced",
+    "verbose": 100,
+    "bagging_temperature": 2.1488010813076404,
+    "border_count": 64,
+    "grow_policy": "Depthwise",
+    "min_data_in_leaf": 94,
+    "random_strength": 3.1886577845151636
+  },
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "optuna_source": {
+    "study_name": "optuna_catboost_context_offer_fold3_hpo200",
+    "trials_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo200_20260617T072558Z_trials.csv",
+    "trial_number": 144,
+    "rank_by_objective": 1,
+    "objective_fold": 3,
+    "objective_metric": "Fold ROC-AUC",
+    "objective_auc": 0.7529394387216434,
+    "params": {
+      "auto_class_weights": "Balanced",
+      "bagging_temperature": 2.1488010813076404,
+      "border_count": 64,
+      "depth": 5,
+      "grow_policy": "Depthwise",
+      "iterations": 1141,
+      "l2_leaf_reg": 39.793937907266965,
+      "learning_rate": 0.0227996695582819,
+      "min_data_in_leaf": 94.0,
+      "random_strength": 3.1886577845151636
+    },
+    "selection_note": "Fold-only HPO screen; this config must be revalidated on all rolling folds before model selection."
+  },
+  "sample_weight": {
+    "enabled": true,
+    "strategy": "linear_recency",
+    "min_weight": 0.7,
+    "max_weight": 1.3,
+    "normalize_mean": true,
+    "note": "Mild linear recency weighting; tests whether later train months improve future-like validation."
+  },
+  "recency_experiment": {
+    "base_config": "configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0144_20260617T072835Z.json",
+    "selection_gate": "Compare Fold3 and late holdouts against unweighted trial0144 before any upload."
+  }
+}

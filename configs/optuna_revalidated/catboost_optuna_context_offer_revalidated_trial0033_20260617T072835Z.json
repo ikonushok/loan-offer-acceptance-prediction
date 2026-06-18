@@ -1,0 +1,54 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "run_prefix": "catboost_optuna_context_offer_revalidated_trial0033",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "model": {
+    "iterations": 959,
+    "learning_rate": 0.0198526440729557,
+    "depth": 6,
+    "l2_leaf_reg": 12.447284667205643,
+    "auto_class_weights": "Balanced",
+    "verbose": 100,
+    "bagging_temperature": 0.2265200488602226,
+    "border_count": 254,
+    "grow_policy": "SymmetricTree",
+    "random_strength": 1.8714317170752783
+  },
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "optuna_source": {
+    "study_name": "optuna_catboost_context_offer_fold3_hpo200",
+    "trials_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/optuna_catboost_context_offer_fold3_hpo200_20260617T072558Z_trials.csv",
+    "trial_number": 33,
+    "rank_by_objective": 5,
+    "objective_fold": 3,
+    "objective_metric": "Fold ROC-AUC",
+    "objective_auc": 0.7518683690271675,
+    "params": {
+      "auto_class_weights": "Balanced",
+      "bagging_temperature": 0.2265200488602226,
+      "border_count": 254,
+      "depth": 6,
+      "grow_policy": "SymmetricTree",
+      "iterations": 959,
+      "l2_leaf_reg": 12.447284667205643,
+      "learning_rate": 0.0198526440729557,
+      "random_strength": 1.8714317170752783
+    },
+    "selection_note": "Fold-only HPO screen; this config must be revalidated on all rolling folds before model selection."
+  }
+}

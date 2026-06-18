@@ -1,0 +1,39 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "sample_weight": {
+    "enabled": false
+  },
+  "run_prefix": "et_context_offer_v1",
+  "model": {
+    "model_type": "ExtraTreesClassifier",
+    "n_estimators": 800,
+    "max_depth": 12,
+    "min_samples_leaf": 40,
+    "min_samples_split": 80,
+    "max_features": "sqrt",
+    "class_weight": "balanced",
+    "n_jobs": -1,
+    "bootstrap": false
+  },
+  "diversity_experiment": {
+    "purpose": "ExtraTrees diversity candidate — low correlation with gradient boosting expected.",
+    "selection_gate": "Keep only if it improves constrained Fold3/late-holdout blend; standalone AUC may be lower."
+  }
+}

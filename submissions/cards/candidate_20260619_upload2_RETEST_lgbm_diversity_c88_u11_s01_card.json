@@ -1,0 +1,106 @@
+{
+  "created_at_utc": "2026-06-17T23:23:18.671395+00:00",
+  "validation_level": "L5_partial_format_check_L3_model_RETEST",
+  "verdict": "PASS_WITH_RISKS",
+  "upload_recommendation": "Do not upload before candidate #1 raw-unrounded result is known; use only as possible upload #2 if risk accepted.",
+  "artifacts": {
+    "submission": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260619_upload2_RETEST_lgbm_diversity_c88_u11_s01.csv",
+    "card": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/cards/candidate_20260619_upload2_RETEST_lgbm_diversity_c88_u11_s01_card.json",
+    "source_run": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_lgbm_diversity_c88_u11_s01_20260618T2321Z_v2"
+  },
+  "hashes": {
+    "submission_sha256": "f3b5e0e0974a4ee73fba5e70a8826c2d79ae1b829920de3340ee2b27f8522f06"
+  },
+  "data_contract": {
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "submission_rows": 36311,
+    "front_id_unique": true,
+    "target_min": 0.001900937522971254,
+    "target_mean": 0.21955154100060947,
+    "target_max": 0.9715519077422037,
+    "target_nan": 0
+  },
+  "source_run": {
+    "run_id": "blend_lgbm_diversity_c88_u11_s01_20260618T2321Z_v2",
+    "created_at_utc": "2026-06-17T23:23:18.640849+00:00",
+    "validation_level": "L3_blend_artifact_RETEST",
+    "verdict": "RETEST",
+    "blend_type": "raw_probability_blend",
+    "weights": {
+      "champion_raw_blend": 0.88,
+      "lgbm_unbalanced": 0.11,
+      "lgbm_sqrtpos": 0.01
+    },
+    "source_runs": {
+      "champion_raw_blend": "experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+      "lgbm_unbalanced": "experiments/runs/lgbm_context_offer_unbalanced_v1_20260617T231832Z_seed42",
+      "lgbm_sqrtpos": "experiments/runs/lgbm_context_offer_sqrtpos_v1_20260617T232003Z_seed42"
+    },
+    "fold_metrics": [
+      {
+        "fold": 1,
+        "valid_rows": 7612,
+        "valid_positive_rate": 0.10759327377824487,
+        "roc_auc": 0.7961764669404887
+      },
+      {
+        "fold": 2,
+        "valid_rows": 5053,
+        "valid_positive_rate": 0.09321195329507223,
+        "roc_auc": 0.7931479313959081
+      },
+      {
+        "fold": 3,
+        "valid_rows": 8721,
+        "valid_positive_rate": 0.0784313725490196,
+        "roc_auc": 0.754871111460373
+      },
+      {
+        "fold": "OOF_TIME_HOLDOUT",
+        "valid_rows": 21386,
+        "valid_positive_rate": 0.09230337604040026,
+        "roc_auc": 0.7813594683700803
+      }
+    ],
+    "test_prediction_min": 0.001900937522971254,
+    "test_prediction_mean": 0.21955154100060947,
+    "test_prediction_max": 0.9715519077422037,
+    "test_prediction_nan_count": 0,
+    "risks": [
+      "Offline improvement is small; do not upload before candidate #1 result or stronger late-holdout evidence.",
+      "Blend weights selected on current OOF/Fold3 scan; public leaderboard must not be used as HPO loop."
+    ],
+    "artifacts": {
+      "fold_metrics": "experiments/runs/blend_lgbm_diversity_c88_u11_s01_20260618T2321Z_v2/fold_metrics.csv",
+      "valid_predictions": "experiments/runs/blend_lgbm_diversity_c88_u11_s01_20260618T2321Z_v2/valid_predictions_time.csv",
+      "test_predictions": "experiments/runs/blend_lgbm_diversity_c88_u11_s01_20260618T2321Z_v2/test_predictions.csv",
+      "summary": "experiments/runs/blend_lgbm_diversity_c88_u11_s01_20260618T2321Z_v2/run_summary.json"
+    }
+  },
+  "late_holdout_battery": {
+    "computed_at_utc": "2026-06-18T00:49:23.109348+00:00",
+    "champion_late_holdout": {
+      "H1_2025_03_01_to_end": 0.7622302176783514,
+      "H2_2025_04_01_to_end": 0.7532490448052028,
+      "H3_2025_05_01_to_end": 0.7650721794463117,
+      "LATE_HOLDOUT_MEAN": 0.760183813976622,
+      "LATE_HOLDOUT_STD": 0.005039011428728588,
+      "LATE_HOLDOUT_MIN": 0.7532490448052028
+    },
+    "lgbm_diversity_blend_late_holdout": {
+      "H1_2025_03_01_to_end": 0.7626668574049508,
+      "H2_2025_04_01_to_end": 0.7534882527957321,
+      "H3_2025_05_01_to_end": 0.7654957786273532,
+      "LATE_HOLDOUT_MEAN": 0.760550296276012,
+      "LATE_HOLDOUT_STD": 0.005125429569552393,
+      "LATE_HOLDOUT_MIN": 0.7534882527957321
+    },
+    "delta_mean": 0.000366,
+    "delta_min": 0.000239,
+    "verdict": "PASS_WITH_RISKS",
+    "note": "Computed by compute_blend_late_holdout.py from component late-holdout prediction files."
+  }
+}
