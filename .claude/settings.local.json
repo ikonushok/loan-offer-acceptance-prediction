@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d[k] for k in ['verdict','upload_recommendation','daily_upload_plan','source_run'] if k in d}, indent=2\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d[k] for k in ['verdict','upload_recommendation','risks','source_run'] if k in d}, indent=2\\)\\)\")",
+      "Bash(xargs ls -lt)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 scripts/evaluate_late_holdouts_lgbm.py --config configs/diversity_experiments/lgbm_context_offer_unbalanced_v1.json)",
+      "Bash(python3 scripts/evaluate_late_holdouts_lgbm.py --config configs/diversity_experiments/lgbm_context_offer_sqrtpos_v1.json)",
+      "Bash(python3 scripts/baseline_xgb_time.py --help)",
+      "Bash(python3 scripts/baseline_et_time.py --help)",
+      "Bash(pip install *)",
+      "Bash(python3 scripts/evaluate_late_holdouts_lgbm.py --config configs/lgbm_optuna_revalidated/lgbm_optuna_trial0091.json)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d[k] for k in ['study_name','n_trials','objective_fold','search_space']}, indent=2\\)\\)\")",
+      "Bash(python3 scripts/optuna_catboost_time.py --config configs/optuna_catboost_context_offer_fold3_hpo_ext1.json)",
+      "Bash(echo \"HPO started, PID=$!\")",
+      "Bash(kill 27200)",
+      "Bash(grep -rohE \"public[_a-z]*.{0,60}\" submissions/cards/)",
+      "Bash(xargs grep -ilE \"public.{0,20}\\(score|result|auc|leaderboard\\)\")",
+      "Bash(grep -vE \"\\\\.db$\")",
+      "Bash(python3 -c \"import json;d=json.load\\(open\\('submissions/cards/candidate_20260619_upload2_RETEST_xgb_hpo_rank_c51_x49_card.json'\\)\\);print\\(json.dumps\\(d,indent=2,ensure_ascii=False\\)\\)\")",
+      "Bash(python3 -c \"import json;print\\(json.dumps\\(json.load\\(open\\('submissions/cards/constrained_blend_xgb_unweighted_rank_rank_c60_x40_20260618_card.json'\\)\\),indent=2,ensure_ascii=False\\)\\)\")",
+      "Bash(grep -vE \"^\\\\s*$\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(awk '/def make_sample_weights/,/^def [a-z]/' scripts/baseline_catboost_time.py)",
+      "Bash(python3 scripts/compute_adversarial_weights.py)",
+      "Bash(python3 scripts/baseline_catboost_time.py --config configs/feature_experiments/catboost_trial0070_advweighted_v1.json)",
+      "Bash(python3 scripts/pseudo_label_h3_probe.py)",
+      "Bash(python3 scripts/tabnet_time.py)",
+      "Bash(grep -vE \"Warning|migration|Device used|^$\")",
+      "Bash(grep -vE \"Warning|migration|Device|^$\" /private/tmp/claude-501/-Users-bobrsubr-PycharmProjects--researches-loan-offer-acceptance-prediction/f10d1cf4-c250-46f9-8b27-928e7e2870d9/tasks/brn66ubf0.output)",
+      "Bash(awk '{print \"PID\",$2,\"CPU\",$3\"%\",\"TIME\",$10}')",
+      "Bash(python3 scripts/baseline_catboost_time.py --config configs/feature_experiments/catboost_trial0070_missingflags_v1.json)"
+    ]
+  }
+}

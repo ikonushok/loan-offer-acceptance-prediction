@@ -1,10 +1,10 @@
-# FILE_MANIFEST — Plus-ready 25-file pack
+# FILE_MANIFEST — Plus-ready 26-file pack
 
-This pack intentionally contains exactly 25 project files. It excludes migration, changelog, and historical-diff documents.
+This pack intentionally contains exactly 26 project files. It excludes migration, changelog, and historical-diff documents.
 
 - `AGENTS.md`
-- `Project_settings_for_ChatGPT_alfa_credit_offer.md`
-- `TASK_BRIEF_alfa_credit_offer.md`
+- `archives/Project_settings_for_ChatGPT_alfa_credit_offer.md`
+- `TASK_BRIEF_alfa_credit_offer_ru.md`
 - `FILE_MANIFEST.md`
 - `agents/README.md`
 - `agents/task_spec_short.md`
@@ -19,6 +19,7 @@ This pack intentionally contains exactly 25 project files. It excludes migration
 - `agents/model_trainer.md`
 - `agents/model_ensembler.md`
 - `agents/metric_validator.md`
+- `agents/drift_adaptation.md`
 - `agents/submission_builder.md`
 - `agents/experiment_manager.md`
 - `agents/interpretability_reviewer.md`

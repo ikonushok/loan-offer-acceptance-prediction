@@ -1,6 +1,6 @@
 # AGENTS.md — Alfa Bank / MFTI credit offer acceptance project
 
-This project uses an agent-native workflow for tabular ML development, validation, and submission building for the Alfa Bank x MFTI case “Отклик на кредитный оффер”. This Plus-ready pack intentionally contains exactly 25 project files and excludes migration/change-history documents.
+This project uses an agent-native workflow for tabular ML development, validation, and submission building for the Alfa Bank x MFTI case “Отклик на кредитный оффер”. This Plus-ready pack intentionally contains exactly 26 project files and excludes migration/change-history documents.
 
 Primary objective: build a reproducible model that predicts `P(target_value = 1)` for each row in `test_apps.csv`, where `1` means a corporate client accepted the proposed credit-product conditions. The main quality criterion is ROC-AUC. Do not optimize for leaderboard score at the expense of leakage, irreproducibility, or invalid submission format.
 
@@ -63,6 +63,7 @@ Declare one mode before non-trivial work:
 - `model_training` — train/tune models and save artifacts.
 - `ensemble_review` — blending/stacking and diversity checks.
 - `metric_validation` — ROC-AUC and probability-output validation.
+- `drift_adaptation` — adapt to train/test distribution shift; judge data ceiling.
 - `submission_build` — generate and validate CSV submission.
 - `experiment_tracking` — update experiment log and artifact registry.
 - `docs_sync` — README/decision-log update after real behavior/contract change.
@@ -155,6 +156,7 @@ Domain agents:
 - `agents/experiment_manager.md` — experiment registry, seeds, configs, run comparison.
 - `agents/interpretability_reviewer.md` — feature importance/SHAP/PDP and business sanity.
 - `agents/reproducibility_reviewer.md` — environment, deterministic rerun, dependency and artifact checks.
+- `agents/drift_adaptation.md` — train/test distribution-shift adaptation and data-ceiling analysis.
 
 ## Routing examples
 
@@ -164,6 +166,7 @@ Domain agents:
 - Validation split design -> `cv_validator.md` + `leakage_guard.md`.
 - CatBoost/LightGBM/XGBoost tuning -> `model_trainer.md` + `metric_validator.md`.
 - Blending several models -> `model_ensembler.md` + `red_team.md`.
+- Severe train/test drift or stalled improvement -> `drift_adaptation.md` + `red_team.md`.
 - Generate final CSV -> `submission_builder.md` + `metric_validator.md`.
 - Before platform upload -> `red_team.md` + `submission_builder.md` + `decision_log_handoff.md`.
 - README/experiment log update -> `readme_consistency_reviewer.md` + `decision_log_handoff.md`.

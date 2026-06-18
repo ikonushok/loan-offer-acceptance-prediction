@@ -17,6 +17,7 @@ Choose one or more:
 - `model_training` — advanced model training/tuning.
 - `ensemble_review` — blending, stacking, rank averaging, model diversity.
 - `metric_validation` — ROC-AUC calculation and probability-output checks.
+- `drift_adaptation` — train/test distribution-shift adaptation and data-ceiling analysis.
 - `submission_build` — final CSV generation and sample format checks.
 - `experiment_tracking` — experiment log, configs, seeds, artifact registry.
 - `interpretability_review` — feature importance and business sanity.
@@ -61,6 +62,7 @@ Do not load all agents. Do request actual CSV schemas, script outputs, fold metr
 | first model | `baseline_builder.md` | `metric_validator.md` |
 | tuning / model comparison | `model_trainer.md` | `metric_validator.md` |
 | blend / ensemble | `model_ensembler.md` | `red_team.md` |
+| train/test drift / stalled improvement / ceiling | `drift_adaptation.md` | `red_team.md` |
 | ROC-AUC dispute | `metric_validator.md` | `cv_validator.md` |
 | submission CSV | `submission_builder.md` | `metric_validator.md` |
 | experiment registry | `experiment_manager.md` | `reproducibility_reviewer.md` |

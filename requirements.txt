@@ -1,7 +1,15 @@
-numpy==1.26.4
-pandas==2.2.3
+# Pinned to the environment all experiments and tests were validated against
+# (miniforge python3.13). System python3 (Framework 3.11) does NOT carry these.
+numpy==2.4.2
+pandas==3.0.3
 scipy==1.11.4
-scikit-learn==1.4.2
-catboost==1.2.8
+scikit-learn==1.9.0
+catboost==1.2.10
 lightgbm==4.6.0
-xgboost==3.0.5
+xgboost==3.2.0
+optuna==4.9.0
+# tabular NN diversity probe (TabNet)
+torch==2.12.1
+pytorch-tabnet==4.1.0
+# tests
+pytest==9.1.0

@@ -1,6 +1,6 @@
 # agents/
 
-Short specialized prompts for the Alfa Bank credit-offer acceptance workflow. This directory is part of a 25-file Plus-ready pack and excludes migration/change-history documents.
+Short specialized prompts for the Alfa Bank credit-offer acceptance workflow. This directory is part of a 26-file Plus-ready pack and excludes migration/change-history documents.
 
 Do not load all agents at once. Use:
 
@@ -32,6 +32,7 @@ AGENTS.md + context_router.md + one primary agent + zero or one reviewer
 - `model_trainer.md` — model training, tuning, and artifact saving.
 - `model_ensembler.md` — blending/stacking and diversity checks.
 - `metric_validator.md` — ROC-AUC and probability-output checks.
+- `drift_adaptation.md` — train/test distribution-shift adaptation and data-ceiling analysis.
 
 ## Submission and operations
 

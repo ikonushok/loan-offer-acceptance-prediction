@@ -45,10 +45,29 @@
     "probability_range_ok": true,
     "unique_predictions": 35415
   },
-  "upload_recommendation": "Use as tomorrow upload #2 only after upload #1 raw accepted-champion is evaluated, or if two uploads are intentionally spent.",
+  "upload_recommendation": "Upload as daily slot #3 (2 of 3 used). Strongest available candidate, dominates the c62_x38 that scored 76.362.",
   "known_risks": [
     "Public LB has strong temporal/test drift; local CV improvements may not transfer one-to-one.",
     "Blend weight selected by validation/Fold3, not by private leaderboard.",
     "Rank transform optimizes ordering and discards calibration scale; acceptable for ROC-AUC."
-  ]
+  ],
+  "full_blend_late_holdout": {
+    "note": "Computed 2026-06-18 via compute_blend_late_holdout logic for full c51_x49 blend (not just XGB component).",
+    "H1": 0.765786,
+    "H2": 0.756184,
+    "H3": 0.769378,
+    "lh_mean": 0.763783,
+    "lh_min": 0.756184,
+    "vs_c62_x38": {
+      "lh_mean": 0.763104,
+      "lh_min": 0.755244,
+      "note": "c51_x49 dominates c62_x38 on every metric"
+    }
+  },
+  "public_context_20260619": {
+    "c62_x38_public": 76.362,
+    "raw_unrounded_public": 76.057,
+    "prev_best_3dp": 76.054,
+    "rationale": "c62_x38 gave +0.31 public from +0.0029 offline lh_mean. c51_x49 uses stronger HPO-XGB at higher weight (0.49) and dominates c62_x38 offline -> expected further public gain."
+  }
 }
