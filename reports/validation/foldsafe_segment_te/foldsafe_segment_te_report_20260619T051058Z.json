@@ -1,0 +1,20 @@
+{
+  "foldsafe_segment_te_run": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/catboost_trial0070_foldsafe_segment_te_v1_20260619T051058Z_seed42",
+  "champion_run": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+  "xgb_hpo_run": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_depth3_child80_reg30_v1_20260617T235100Z_seed42",
+  "metrics_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/foldsafe_segment_te/foldsafe_segment_te_metrics_20260619T051058Z.csv",
+  "correlations_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/foldsafe_segment_te/foldsafe_segment_te_correlations_20260619T051058Z.csv",
+  "simplex_scan_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/foldsafe_segment_te/foldsafe_segment_te_simplex_scan_20260619T051058Z.csv",
+  "named_blends_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/foldsafe_segment_te/foldsafe_segment_te_named_blends_20260619T051058Z.csv",
+  "best_by_fold3": {
+    "w_champion": 0.5,
+    "w_xgb_hpo": 0.5,
+    "w_foldsafe_segment_te": 0.0,
+    "oof_auc": 0.7815402520005069,
+    "fold1_auc": 0.7966860412760604,
+    "fold2_auc": 0.7941583005965371,
+    "fold3_auc": 0.756791142137206,
+    "fold_mean": 0.7825451613366011,
+    "fold_min": 0.756791142137206
+  }
+}

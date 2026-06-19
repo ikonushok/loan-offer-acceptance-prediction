@@ -27,19 +27,17 @@ data/interim/*
 data/processed/*
 !data/processed/.gitkeep
 
-# Large/generated artifacts
-experiments/runs/*
-!experiments/runs/.gitkeep
-submissions/*.csv
-submissions/cards/*
-!submissions/cards/.gitkeep
-!submissions/cards/*.json
+# Large/generated artifacts (archive only; final runs are committed)
+experiments/runs_archive/
+submissions/arviche_candidates/
+submissions/upload_20260621_alternates/
 reports/**/*.html
 reports/**/*.png
 reports/**/*.jpg
 reports/**/*.parquet
 reports/**/*.pkl
 reports/**/*.joblib
+reports/**/*.db
 
 # Model artifacts
 *.pkl
@@ -47,7 +45,16 @@ reports/**/*.joblib
 *.cbm
 *.model
 *.onnx
+
+# CatBoost training cache
+catboost_info/
+
+# Internal agent infrastructure (not part of the solution)
 /archives/
 /agents/
 /AGENTS.md
 /FILE_MANIFEST.md
+
+# Claude Code session files
+.claude/
+reports/validation/external_scoring/

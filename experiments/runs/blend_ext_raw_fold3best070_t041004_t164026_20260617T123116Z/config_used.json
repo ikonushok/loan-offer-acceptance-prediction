@@ -1,0 +1,16 @@
+{
+  "run_id": "blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+  "blend_type": "raw_probability_blend",
+  "weights": {
+    "fold3best": 0.7,
+    "t041": 0.04,
+    "t164": 0.26
+  },
+  "sources": {
+    "fold3best": "experiments/runs/blend_optuna_raw_fold3best_t144040_t157026_t070034_20260617T120901Z",
+    "t041": "experiments/runs/catboost_optuna_context_offer_revalidated_trial0041_20260617T121946Z_seed42",
+    "t164": "experiments/runs/catboost_optuna_context_offer_revalidated_trial0164_20260617T120956Z_seed42"
+  },
+  "validation_level": "L3_time_holdout_oof_blend",
+  "selection_note": "Expanded ensemble from previous L3 blends and diversity Optuna runs."
+}

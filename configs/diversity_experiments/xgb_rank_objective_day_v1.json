@@ -1,0 +1,40 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "run_prefix": "xgb_rank_objective_day_v1",
+  "model": {
+    "objective": "rank:pairwise",
+    "eval_metric": "auc",
+    "n_estimators": 1400,
+    "learning_rate": 0.025,
+    "max_depth": 3,
+    "min_child_weight": 80,
+    "subsample": 0.85,
+    "colsample_bytree": 0.85,
+    "reg_alpha": 0.5,
+    "reg_lambda": 30.0,
+    "gamma": 0.0,
+    "max_cat_to_onehot": 8,
+    "early_stopping_rounds": 100
+  },
+  "diversity_experiment": {
+    "purpose": "Second representation: learning-to-rank on decision_day groups, decorrelated from pointwise champion.",
+    "selection_gate": "Keep only if corr_vs_champion < ~0.80 AND constrained blend improves lh_mean without lh_min loss."
+  }
+}

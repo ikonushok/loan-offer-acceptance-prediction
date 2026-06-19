@@ -1,0 +1,49 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260620_upload1_xgb_hpo_rank_c35_x65.csv",
+  "sha256": "b96def87ee31b85dd04369b44ee7cdf3cd68f467de23d354c15dc096ee983f32",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "script": "scripts/build_xgb_hpo_rank_blend_submission.py",
+    "blend": "champion_rank*0.35 + xgb_hpo_rank*0.65 (rank percentile on test set)",
+    "source_runs": {
+      "accepted_champion": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+      "xgb_hpo": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_depth3_child80_reg30_v1_20260617T235100Z_seed42"
+    },
+    "weights": {
+      "champion": 0.35,
+      "xgb_hpo": 0.65
+    }
+  },
+  "selection": {
+    "method": "offline late-holdout scan (Fold3+lh_mean gate), no leaderboard",
+    "scan_script": "scripts/scan_xgb_hpo_blend_weights.py",
+    "note": "Public order matches offline order (c51>c62 in both). XGB diversification confirmed lever."
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "probability_range_ok": true,
+    "unique_predictions": 34964
+  },
+  "known_risks": [
+    "Public LB has strong temporal/test drift; local CV improvements may not transfer one-to-one.",
+    "Blend weight selected by validation late-holdout, not by leaderboard.",
+    "Rank transform optimizes ordering and discards calibration scale; acceptable for ROC-AUC."
+  ],
+  "generated_at": "20260619T010419Z",
+  "late_holdout": {
+    "H1": 0.7661692033829287,
+    "H2": 0.7563055408210709,
+    "H3": 0.7698636994756356,
+    "lh_mean": 0.7641128145598785,
+    "lh_min": 0.7563055408210709,
+    "vs_champion_lh_mean": 0.760183813976622,
+    "delta_mean_vs_champion": 0.0039290005832564034,
+    "vs_c51_x49_lh_mean": 0.763783,
+    "vs_c51_x49_lh_min": 0.756184
+  }
+}

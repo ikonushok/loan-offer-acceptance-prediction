@@ -1,0 +1,51 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260621_upload1_no_month_three_way_c10_cat25_x65.csv",
+  "sha256": "e7f9cc1a190079dca7f531dde5abde8e7c478b7b5d6c4d030c63095967776aa7",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "blend": "champion_rank*0.10 + catboost_no_month_rank*0.25 + xgb_no_month_rank*0.65 (rank percentile on test)",
+    "source_runs": {
+      "champion": "experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+      "xgb_no_month": "experiments/runs/xgb_hpo_time_regime_no_month_v1_20260619T055715Z_seed42",
+      "catboost_no_month": "experiments/runs/catboost_trial0070_no_month_v1_20260619T214438Z_seed42"
+    },
+    "weights": {
+      "champion": 0.1,
+      "catboost_no_month": 0.25,
+      "xgb_no_month": 0.65
+    }
+  },
+  "selection": {
+    "method": "offline three-way late-holdout scan, lh_min gated >= current best A; no leaderboard",
+    "scan_script": "scripts/scan_no_month_three_way_blend.py"
+  },
+  "late_holdout": {
+    "lh_mean": 0.768997,
+    "lh_min": 0.75838,
+    "H1": 0.770815,
+    "H2": 0.75838,
+    "H3": 0.777797,
+    "vs_best_A_public_76505": {
+      "A_lh_mean": 0.768074,
+      "A_lh_min": 0.758285,
+      "delta_mean": 0.000923
+    }
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "probability_range_ok": true,
+    "unique_predictions": 35714
+  },
+  "known_risks": [
+    "Calendar (no_month) features extrapolate to unseen public/private months; late-holdout is in-train-range proxy.",
+    "Gain +0.0009 lh_mean; at ~27x amplification expected ~+0.025 public, near signal threshold.",
+    "Weights selected offline by late-holdout, no leaderboard probing."
+  ],
+  "amplification_note": "no_month подтвердил усиление offline lh_mean -> public ~27x (76.388->76.505 от +0.0043).",
+  "created_at_utc": "2026-06-19T21:47:55.018378+00:00"
+}

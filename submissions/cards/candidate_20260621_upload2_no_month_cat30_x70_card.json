@@ -1,0 +1,48 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260621_upload2_no_month_cat30_x70.csv",
+  "sha256": "e6d31e5d9343669c036b9a4148280f34d3566e07700342487310fc19c653c922",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "blend": "catboost_no_month_rank*0.30 + xgb_no_month_rank*0.70 (rank percentile on test)",
+    "source_runs": {
+      "xgb_no_month": "experiments/runs/xgb_hpo_time_regime_no_month_v1_20260619T055715Z_seed42",
+      "catboost_no_month": "experiments/runs/catboost_trial0070_no_month_v1_20260619T214438Z_seed42"
+    },
+    "weights": {
+      "catboost_no_month": 0.3,
+      "xgb_no_month": 0.7
+    }
+  },
+  "selection": {
+    "method": "offline three-way scan, variant D = max lh_mean (no champion); no leaderboard",
+    "scan_script": "scripts/scan_no_month_three_way_blend.py"
+  },
+  "late_holdout": {
+    "lh_mean": 0.769157,
+    "lh_min": 0.758049,
+    "H1": 0.770977,
+    "H2": 0.758049,
+    "H3": 0.778447,
+    "vs_best_A_public_76505": {
+      "A_lh_mean": 0.768074,
+      "A_lh_min": 0.758285,
+      "delta_mean": 0.001083
+    }
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "probability_range_ok": true,
+    "unique_predictions": 35177
+  },
+  "known_risks": [
+    "Max lh_mean variant but lh_min slightly below A (0.758049 vs 0.758285).",
+    "Calendar no_month extrapolates to unseen months.",
+    "Weights offline-selected, no LB probing."
+  ],
+  "created_at_utc": "2026-06-19T22:02:13.672934+00:00"
+}

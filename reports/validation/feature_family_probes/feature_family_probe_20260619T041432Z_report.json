@@ -1,0 +1,498 @@
+{
+  "created_at_utc": "2026-06-19T04:17:21.682919+00:00",
+  "validation_level": "L3_diagnostic_feature_family_probe",
+  "config_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/xgb_hpo_experiments/xgb_hpo_depth3_child80_reg30_v1.json",
+  "train_sha256": "988e874ae9a877642537822ae5399435839799c32fded503feff7ccdf88506d7",
+  "test_sha256": "74f788c6d38a4ce2784804446d8a257715138aaa43580035bcbe59765c890904",
+  "reports": [
+    {
+      "variant": "base",
+      "feature_count": 38,
+      "added_features": [],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_base_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 892.0,
+          "roc_auc": 0.7945736893918844,
+          "variant": "base",
+          "feature_count": 38,
+          "added_feature_count": 0
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 1368.0,
+          "roc_auc": 0.7918831743525158,
+          "variant": "base",
+          "feature_count": 38,
+          "added_feature_count": 0
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1395.0,
+          "roc_auc": 0.7550302802753639,
+          "variant": "base",
+          "feature_count": 38,
+          "added_feature_count": 0
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7798158071204246,
+          "variant": "base",
+          "feature_count": 38,
+          "added_feature_count": 0
+        }
+      ]
+    },
+    {
+      "variant": "log",
+      "feature_count": 47,
+      "added_features": [
+        "loan_amount_last_signed_log1p",
+        "overdraft_limit_min_signed_log1p",
+        "overdraft_limit_max_signed_log1p",
+        "sum_deb_ul_90_signed_log1p",
+        "sum_deb_ul_30_signed_log1p",
+        "balance_rur_amt_30_min_signed_log1p",
+        "loan_rev_max_start_non_fin_signed_log1p",
+        "loan_rev_min_start_fin_signed_log1p",
+        "sum_deb_investment_90_signed_log1p"
+      ],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_log_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 858.0,
+          "roc_auc": 0.7937324873141154,
+          "variant": "log",
+          "feature_count": 47,
+          "added_feature_count": 9
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 931.0,
+          "roc_auc": 0.7931224462750485,
+          "variant": "log",
+          "feature_count": 47,
+          "added_feature_count": 9
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1392.0,
+          "roc_auc": 0.7540320644213495,
+          "variant": "log",
+          "feature_count": 47,
+          "added_feature_count": 9
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7794065876171812,
+          "variant": "log",
+          "feature_count": 47,
+          "added_feature_count": 9
+        }
+      ]
+    },
+    {
+      "variant": "zero_flags",
+      "feature_count": 62,
+      "added_features": [
+        "loan_amount_last_is_zero",
+        "overdraft_limit_min_is_zero",
+        "overdraft_limit_max_is_zero",
+        "offered_rate_is_zero",
+        "cb_rate_is_zero",
+        "corp_credit_products_is_zero",
+        "sum_deb_ul_90_is_zero",
+        "sum_deb_ul_30_is_zero",
+        "cnt_deb_loan_90_is_zero",
+        "cnt_deb_ul_ip_90_is_zero",
+        "cnt_deb_ul_ip_30_is_zero",
+        "balance_rur_amt_30_min_is_zero",
+        "cnt_cred_loan_90_is_zero",
+        "loan_rev_max_start_non_fin_is_zero",
+        "loan_rev_min_start_fin_is_zero",
+        "app_term_mean_360_is_zero",
+        "overdraft_app_term_max_360_is_zero",
+        "days_from_authperson_registration_is_zero",
+        "fl_hdb_bki_total_active_products_is_zero",
+        "corp_list_is_zero",
+        "count_all_corp_dashboard_events_is_zero",
+        "p75_time_spent_minutes_is_zero",
+        "sum_deb_investment_90_is_zero",
+        "row_missing_count"
+      ],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_zero_flags_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 797.0,
+          "roc_auc": 0.7948999248130707,
+          "variant": "zero_flags",
+          "feature_count": 62,
+          "added_feature_count": 24
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 1230.0,
+          "roc_auc": 0.7934310479203678,
+          "variant": "zero_flags",
+          "feature_count": 62,
+          "added_feature_count": 24
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1396.0,
+          "roc_auc": 0.7554008252766626,
+          "variant": "zero_flags",
+          "feature_count": 62,
+          "added_feature_count": 24
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7804773930037532,
+          "variant": "zero_flags",
+          "feature_count": 62,
+          "added_feature_count": 24
+        }
+      ]
+    },
+    {
+      "variant": "frequency",
+      "feature_count": 42,
+      "added_features": [
+        "db_group_last_combined_freq",
+        "fl_adminarea_combined_freq",
+        "corp_list_combined_freq",
+        "fl_hdb_bki_total_active_products_combined_freq"
+      ],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_frequency_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 838.0,
+          "roc_auc": 0.7933356124876808,
+          "variant": "frequency",
+          "feature_count": 42,
+          "added_feature_count": 4
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 1230.0,
+          "roc_auc": 0.7934310479203679,
+          "variant": "frequency",
+          "feature_count": 42,
+          "added_feature_count": 4
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1393.0,
+          "roc_auc": 0.7545769674902698,
+          "variant": "frequency",
+          "feature_count": 42,
+          "added_feature_count": 4
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7794605291204785,
+          "variant": "frequency",
+          "feature_count": 42,
+          "added_feature_count": 4
+        }
+      ]
+    },
+    {
+      "variant": "quantile_bins",
+      "feature_count": 43,
+      "added_features": [
+        "loan_amount_last_qbin16",
+        "overdraft_limit_min_qbin16",
+        "overdraft_limit_max_qbin16",
+        "offered_rate_qbin16",
+        "cb_rate_qbin16"
+      ],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_quantile_bins_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 1396.0,
+          "roc_auc": 0.7959772206791196,
+          "variant": "quantile_bins",
+          "feature_count": 43,
+          "added_feature_count": 5
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 1110.0,
+          "roc_auc": 0.7922439046541392,
+          "variant": "quantile_bins",
+          "feature_count": 43,
+          "added_feature_count": 5
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1010.0,
+          "roc_auc": 0.7543679560977846,
+          "variant": "quantile_bins",
+          "feature_count": 43,
+          "added_feature_count": 5
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7804973568402419,
+          "variant": "quantile_bins",
+          "feature_count": 43,
+          "added_feature_count": 5
+        }
+      ]
+    },
+    {
+      "variant": "cat_interactions",
+      "feature_count": 41,
+      "added_features": [
+        "db_group_last__x__fl_adminarea",
+        "db_group_last__x__corp_list",
+        "fl_adminarea__x__corp_list"
+      ],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_cat_interactions_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 881.0,
+          "roc_auc": 0.7934751837298576,
+          "variant": "cat_interactions",
+          "feature_count": 41,
+          "added_feature_count": 3
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 1185.0,
+          "roc_auc": 0.7915280044408981,
+          "variant": "cat_interactions",
+          "feature_count": 41,
+          "added_feature_count": 3
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1045.0,
+          "roc_auc": 0.7527789965561326,
+          "variant": "cat_interactions",
+          "feature_count": 41,
+          "added_feature_count": 3
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7787294612572133,
+          "variant": "cat_interactions",
+          "feature_count": 41,
+          "added_feature_count": 3
+        }
+      ]
+    },
+    {
+      "variant": "time_regime",
+      "feature_count": 41,
+      "added_features": [
+        "decision_day_num_probe",
+        "decision_month_probe",
+        "decision_week_probe"
+      ],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_time_regime_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 1399.0,
+          "roc_auc": 0.7929706422272298,
+          "variant": "time_regime",
+          "feature_count": 41,
+          "added_feature_count": 3
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 1394.0,
+          "roc_auc": 0.7965119673493899,
+          "variant": "time_regime",
+          "feature_count": 41,
+          "added_feature_count": 3
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1393.0,
+          "roc_auc": 0.7570851951537005,
+          "variant": "time_regime",
+          "feature_count": 41,
+          "added_feature_count": 3
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7806182359129429,
+          "variant": "time_regime",
+          "feature_count": 41,
+          "added_feature_count": 3
+        }
+      ]
+    },
+    {
+      "variant": "all_label_free",
+      "feature_count": 83,
+      "added_features": [
+        "loan_amount_last_signed_log1p",
+        "overdraft_limit_min_signed_log1p",
+        "overdraft_limit_max_signed_log1p",
+        "sum_deb_ul_90_signed_log1p",
+        "sum_deb_ul_30_signed_log1p",
+        "balance_rur_amt_30_min_signed_log1p",
+        "loan_rev_max_start_non_fin_signed_log1p",
+        "loan_rev_min_start_fin_signed_log1p",
+        "sum_deb_investment_90_signed_log1p",
+        "loan_amount_last_is_zero",
+        "overdraft_limit_min_is_zero",
+        "overdraft_limit_max_is_zero",
+        "offered_rate_is_zero",
+        "cb_rate_is_zero",
+        "corp_credit_products_is_zero",
+        "sum_deb_ul_90_is_zero",
+        "sum_deb_ul_30_is_zero",
+        "cnt_deb_loan_90_is_zero",
+        "cnt_deb_ul_ip_90_is_zero",
+        "cnt_deb_ul_ip_30_is_zero",
+        "balance_rur_amt_30_min_is_zero",
+        "cnt_cred_loan_90_is_zero",
+        "loan_rev_max_start_non_fin_is_zero",
+        "loan_rev_min_start_fin_is_zero",
+        "app_term_mean_360_is_zero",
+        "overdraft_app_term_max_360_is_zero",
+        "days_from_authperson_registration_is_zero",
+        "fl_hdb_bki_total_active_products_is_zero",
+        "corp_list_is_zero",
+        "count_all_corp_dashboard_events_is_zero",
+        "p75_time_spent_minutes_is_zero",
+        "sum_deb_investment_90_is_zero",
+        "row_missing_count",
+        "db_group_last_combined_freq",
+        "fl_adminarea_combined_freq",
+        "corp_list_combined_freq",
+        "fl_hdb_bki_total_active_products_combined_freq",
+        "loan_amount_last_qbin16",
+        "overdraft_limit_min_qbin16",
+        "overdraft_limit_max_qbin16",
+        "offered_rate_qbin16",
+        "cb_rate_qbin16",
+        "db_group_last__x__fl_adminarea",
+        "db_group_last__x__corp_list",
+        "fl_adminarea__x__corp_list"
+      ],
+      "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_all_label_free_20260619T041432Z_valid_predictions.csv",
+      "metrics": [
+        {
+          "fold": 1,
+          "train_rows": 123855.0,
+          "valid_rows": 7612,
+          "best_iteration": 1320.0,
+          "roc_auc": 0.7963764321779925,
+          "variant": "all_label_free",
+          "feature_count": 83,
+          "added_feature_count": 45
+        },
+        {
+          "fold": 2,
+          "train_rows": 131467.0,
+          "valid_rows": 5053,
+          "best_iteration": 1134.0,
+          "roc_auc": 0.7921563285115485,
+          "variant": "all_label_free",
+          "feature_count": 83,
+          "added_feature_count": 45
+        },
+        {
+          "fold": 3,
+          "train_rows": 136520.0,
+          "valid_rows": 8721,
+          "best_iteration": 1375.0,
+          "roc_auc": 0.7562139505372447,
+          "variant": "all_label_free",
+          "feature_count": 83,
+          "added_feature_count": 45
+        },
+        {
+          "fold": "OOF_TIME_HOLDOUT",
+          "train_rows": NaN,
+          "valid_rows": 21386,
+          "best_iteration": NaN,
+          "roc_auc": 0.7814460566177535,
+          "variant": "all_label_free",
+          "feature_count": 83,
+          "added_feature_count": 45
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    "metrics": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_family_probe_20260619T041432Z_metrics.csv",
+    "compact": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_family_probe_20260619T041432Z_compact.csv"
+  },
+  "risk": "Diagnostic only; variants selected on validation require late-holdout/red-team before submission."
+}

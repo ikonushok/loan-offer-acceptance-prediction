@@ -1,0 +1,61 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/upload_20260620/candidate_20260620_upload3_RETEST_xgb_time_regime_rank_c20_x80.csv",
+  "sha256": "46d7f44306626b6a2b6b65bb2aaa4defca61165b58988c081de16a770fc8668b",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "script": "ad-hoc from scripts/feature_family_probe.py time_regime + XGB full model",
+    "source_runs": {
+      "champion": "experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+      "xgb_time_regime_full": "experiments/runs/xgb_hpo_time_regime_probe_full_20260619T0420Z_seed42"
+    },
+    "weights": {
+      "champion_rank": 0.2,
+      "xgb_time_regime_rank": 0.8
+    }
+  },
+  "validation": {
+    "fold_probe": {
+      "xgb_time_regime_fold3": 0.7570851951537005,
+      "xgb_base_fold3": 0.7550302802753639
+    },
+    "late_holdout_standalone": {
+      "H1": 0.7707657215859134,
+      "H2": 0.7570851951537005,
+      "H3": 0.7706795201206045,
+      "lh_mean": 0.7661768122867394,
+      "lh_min": 0.7570851951537005
+    },
+    "late_holdout_blend_scan_best": {
+      "w_xgb_time": 0.8,
+      "H1": 0.770481,
+      "H2": 0.757915,
+      "H3": 0.771134,
+      "lh_mean": 0.76651,
+      "lh_min": 0.757915
+    },
+    "reference_base_xgb_blend_best": {
+      "w_xgb_base": 0.69,
+      "lh_mean": 0.764137,
+      "lh_min": 0.756296
+    }
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "front_id_unique": true,
+    "probability_range_ok": true,
+    "nan_count": 0,
+    "unique_predictions": 33852
+  },
+  "upload_recommendation": "RETEST candidate. Offline Fold3 and late-holdout dominate prior XGB blend, but uses time-regime features and should receive red-team before upload.",
+  "known_risks": [
+    "Time-regime features may overfit validation period and extrapolate to unseen test months.",
+    "Blend weight selected on late-holdout scan; no public result yet.",
+    "Rank transform optimizes ordering, not calibration."
+  ],
+  "created_at_utc": "2026-06-19T04:20:42.200693+00:00"
+}

@@ -1,0 +1,41 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260621_upload4_EXPERIMENT_cyclic_seasonal_c30_x70.csv",
+  "sha256": "128fb2ebb612c4988c19b7da2e2bd85910299d85a977727e174a72eaede74fbf",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "blend": "full_champion_no_month_rank*0.30 + xgb_no_month_CYCLIC_BOTH_rank*0.70",
+    "champion_no_month": "t070_nm*0.70 + t041_nm*0.04 + t164_nm*0.26",
+    "xgb": "xgb no_month + cyclic sin/cos(day-of-year) + sin/cos(week-of-year)",
+    "source_runs": {
+      "xgb_cyclic": "experiments/runs/xgb_no_month_cyclic_both_v1_20260619T223119Z_seed42"
+    },
+    "weights": {
+      "champion_no_month": 0.3,
+      "xgb_cyclic": 0.7
+    }
+  },
+  "selection": {
+    "method": "EXPERIMENT — seasonal hypothesis test; offline split-verdict (late-holdout penalizes, winter-holdout favors)"
+  },
+  "validation": {
+    "late_holdout_xgb_lh_mean": 0.762167,
+    "winter_holdout_xgb_auc": 0.774031,
+    "note": "late-holdout (spring) blind to winter; winter-holdout confirms cyclic helps Dec peak +0.0027 vs no_month."
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "probability_range_ok": true,
+    "unique_predictions": 35180
+  },
+  "known_risks": [
+    "SEASONAL EXPERIMENT: cyclic helps winter test part, hurts spring/summer part; net public effect unknown offline.",
+    "Only upload if a slot is available for hypothesis testing; main candidate remains full_champion_no_month_c30_x70.",
+    "day_num trend still present; cyclic added on top for Dec 2025 seasonality."
+  ],
+  "created_at_utc": "2026-06-19T22:32:21.178869+00:00"
+}

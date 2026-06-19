@@ -171,3 +171,110 @@ late-holdout батарея. Чёткий внутренний оптимум (c
 Оба в `submissions/upload_20260620/`, карты + SHA256 сверены
 (`scripts/build_xgb_hpo_rank_blend_submission.py`). Слот #3 — резерв (мульти-seed XGB
 rank-бленд для доп. диверсификации, если #1/#2 подтвердят прирост на паблике).
+
+### Эксперименты декорреляции (2026-06-19) — все три пути закрыты
+
+Цель: получить «второе независимое представление» данных (по аналогии с решением
+credit-default-prediction, где aggregates + sequences давали прирост в бленде).
+
+| подход | corr vs champion | OOF AUC | OOF бленд | вердикт |
+|---|---|---|---|---|
+| Learning-to-rank (`rank:pairwise` по `decision_day`) | 0.53 ✅ | 0.695 ❌ | монотонно хуже | закрыт |
+| Split features: absolute only (25 фичей) | 0.93 ❌ | 0.773 | +0.0004 (шум) | закрыт |
+| Split features: context only (16 фичей) | 0.23 ✅ | 0.542 ❌ | монотонно хуже | закрыт |
+
+**Фундаментальный вывод:** на этом feature set декорреляция и сила — взаимоисключающие.
+Любая модель, ловящая сигнал, неизбежно коррелирует >0.87 с champion; любая
+декоррелированная — слишком слаба для бленда.
+
+Артефакты:
+- `scripts/xgb_rank_objective_time.py` + `configs/diversity_experiments/xgb_rank_objective_day_v1.json`
+- `scripts/split_feature_space_experiment.py`
+- `reports/validation/split_feature_space_*.json`
+
+**Итог:** единственный рабочий рычаг — pointwise CatBoost + pointwise XGB rank-blend
+с увеличением веса XGB (оптимум 0.65–0.70). Кандидаты c35_x65 / c30_x70 готовы.
+
+---
+
+## ОБНОВЛЕНИЕ 2026-06-20 — прорыв time_regime + CatBoost-расширение
+
+### Паблик-результаты
+| # | файл | offline lh_mean | Public |
+|---|---|---|---|
+| c51_x49 (прежний best) | — | 0.7638 | 76.388 |
+| c35_x65 | 0.7641 | 76.383 (Δlh +0.0003 = шум) |
+| **no_month c20_n80** (XGB календарь, day_num+week, без месяца) | 0.7681 | **76.505 (NEW BEST)** |
+
+**time_regime** = календарные признаки из decision_day. Champion их ИСКЛЮЧАЛ (ошибка: судили по Fold3, не по late-holdout). Вариант **no_month** (day_num+week) — оптимум. Усиление offline→public ~27×.
+
+### CatBoost-расширение (2026-06-20)
+Добавлен no_month-режим в `baseline_catboost_time.py` (флаги include_day_num/month/dayofweek/week).
+CatBoost trial0070 + no_month: lh_mean 0.7616 (vs 0.7598 без time), lh_min падает (0.7502).
+Standalone слабее XGB, НО в бленде декоррелирует и помогает.
+
+**Скан трёхстороннего бленда** (`scripts/scan_no_month_three_way_blend.py`):
+| бленд | lh_mean | lh_min |
+|---|---|---|
+| A: champion×0.20 + xgb_nm×0.80 (=76.505) | 0.768074 | 0.758285 |
+| **D: cat_nm×0.30 + xgb_nm×0.70** | 0.769157 | 0.758049 |
+| **★ champion×0.10 + cat_nm×0.25 + xgb_nm×0.65** | 0.768997 | 0.758380 |
+
+Кандидат на завтра: `candidate_20260621_upload1_no_month_three_way_c10_cat25_x65.csv`
+(lh_mean +0.0009 vs best A, lh_min не хуже → ожидаемо ~+0.025 public).
+
+**Неисчерпано:** другие no-month календарные (day-of-week, квартал, дни до/после смены cb_rate); скан веса xgb_nm выше 0.86; multi-seed no_month; добавить календарь в trial0041/0164.
+
+---
+
+## ФИНАЛ 2026-06-21 — последняя попытка
+
+### Ablation календаря: day_num — главный драйвер
+Разложение буста time_regime (+0.117 public) по компонентам (XGB late-holdout, база без time = 0.7633):
+| признак | lh_mean | вклад |
+|---|---|---|
+| day_num (линейный счётчик дней) | 0.7675 | **+0.0042 (~93%)** |
+| + week | 0.7678 | +0.0003 |
+| month (категориальный) | 0.7629 | −0.0004 (ВРЕДИТ) |
+
+**Вывод:** почти весь эффект = `day_num` (ось времени). `month` переобучается (unseen в тесте).
+
+### Диагностика тренда
+- Тест на **99.9% за границей train** по времени (day_num 490–669 vs train max 490). GBM не экстраполирует → day_num clamp к 490 для всего теста.
+- Prevalence НЕ линейна: пик декабрь 2024 (0.155), спад весна 2025 (0.07) → **годовая сезонность**.
+
+### Циклические сезонные признаки — спорно
+Добавлены sin/cos(day-of-year), sin/cos(week-of-year) — переносятся на будущие месяцы.
+| | late-holdout (весна) | winter-holdout (зима) |
+|---|---|---|
+| no_month | 0.7678 | 0.7714 |
+| no_month + cyclic_both | 0.7622 (−0.006) | 0.7740 (+0.0027) |
+
+**Late-holdout СЛЕП к зиме** (покрывает только весну). Winter-holdout (обучение без ноя-дек 2024, валидация на них) подтверждает: cyclic помогает зимнему пику. Но эффект разнонаправлен по сезонам → net на паблике неизвестен offline.
+
+### ФИНАЛЬНЫЙ КАНДИДАТ (1 попытка)
+`submissions/upload_20260621/candidate_20260621_upload3_full_champion_no_month_c30_x70.csv`
+- бленд: full_champion_no_month×0.30 + xgb_no_month×0.70
+- lh_mean=0.769201, lh_min=0.758380 (лучший по ОБЕИМ метрикам)
+- SHA256: b238d4265b08e71fd2f2efcd6e5eec7287203fb9023d634dc4cb540f045391bd
+- календарь (day_num+week, no month) во ВСЕХ компонентах champion + XGB
+- ожидаемо ~+0.025 public vs 76.505 (усиление ~27×)
+
+Резерв (НЕ грузить, в upload_20260621_alternates/): cat30_x70, three_way_c10_cat25_x65, EXPERIMENT_cyclic_seasonal.
+
+**Неисчерпано на будущее:** циклическая сезонность (нужен публичный тест), фазы cb_rate, day-of-week, multi-seed no_month, time_regime в LGBM; разрыв с лидером 0.789 (вероятно структурный/внешний рычаг).
+
+---
+
+## ✅ РЕЗУЛЬТАТ 2026-06-21 — финал подтверждён
+
+`full_champion_no_month_c30_x70` → **Public AUC = 76.744** (NEW BEST, +0.239 vs 76.505).
+
+Прирост (+0.239) почти в 10× больше offline-прогноза (+0.025) — усиление календарного сигнала на паблике оказалось сильнее, чем оценивал late-holdout (что согласуется с выводом: late-holdout недооценивает временные признаки).
+
+### Итоговый прогресс паблика
+75.448 → 76.054 → 76.388 (XGB rank) → 76.505 (time_regime no_month) → **76.744 (full champion no_month)**.
+Суммарно за проект: **+1.296**.
+
+Финальное решение: rank-blend full_champion_no_month×0.30 + xgb_no_month×0.70.
+Главный рычаг — календарный `day_num` (ось времени) во всех компонентах.

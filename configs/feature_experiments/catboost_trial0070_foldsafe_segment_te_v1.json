@@ -1,0 +1,70 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "run_prefix": "catboost_trial0070_foldsafe_segment_te_v1",
+  "seed": 42,
+  "cutoffs": [
+    "2025-01-01",
+    "2025-03-01",
+    "2025-04-01"
+  ],
+  "model": {
+    "iterations": 1347,
+    "learning_rate": 0.0207102246213281,
+    "depth": 6,
+    "l2_leaf_reg": 4.71255063500703,
+    "auto_class_weights": "SqrtBalanced",
+    "verbose": 100,
+    "bagging_temperature": 0.2762006775607772,
+    "border_count": 128,
+    "grow_policy": "Depthwise",
+    "min_data_in_leaf": 79,
+    "random_strength": 1.269328964812104
+  },
+  "time_features": {
+    "enabled": false
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "fold_safe_features": {
+    "segment_stats": {
+      "enabled": true,
+      "categorical_cols": [
+        "db_group_last",
+        "fl_adminarea"
+      ],
+      "numeric_cols": [
+        "offered_rate",
+        "loan_amount_last",
+        "overdraft_limit_min",
+        "overdraft_limit_max",
+        "cb_rate",
+        "sum_deb_ul_90",
+        "cnt_deb_ul_ip_90"
+      ],
+      "min_count": 20,
+      "add_diff": true,
+      "add_ratio": true,
+      "add_zscore": true
+    },
+    "target_encoding": {
+      "enabled": true,
+      "categorical_cols": [
+        "db_group_last",
+        "fl_adminarea"
+      ],
+      "smoothing": 50.0,
+      "inner_splits": 5
+    }
+  },
+  "sample_weight": {
+    "enabled": false
+  },
+  "excluded_features": [],
+  "experiment_note": "Fold-safe test of ideas from external solution: label-free segment stats plus OOF category target encoding. All segment stats and target encodings are fit inside each rolling train fold; validation/test never participates in fitting."
+}

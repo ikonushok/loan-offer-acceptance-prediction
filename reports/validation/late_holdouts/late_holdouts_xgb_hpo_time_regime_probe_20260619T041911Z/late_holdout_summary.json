@@ -1,0 +1,63 @@
+{
+  "created_at_utc": "2026-06-19T04:19:11.852732+00:00",
+  "validation_level": "L4_late_holdout_battery_diagnostic",
+  "variant": "time_regime",
+  "config_path": "configs/xgb_hpo_experiments/xgb_hpo_depth3_child80_reg30_v1.json",
+  "added_features": [
+    "decision_day_num_probe",
+    "decision_month_probe",
+    "decision_week_probe"
+  ],
+  "feature_count": 41,
+  "metrics": [
+    {
+      "holdout": "H1_2025_03_01_to_end",
+      "cutoff": "2025-03-01",
+      "train_rows": 131467.0,
+      "valid_rows": 13774.0,
+      "valid_positive_rate": 0.08385363728764339,
+      "best_iteration": 1393.0,
+      "roc_auc": 0.7707657215859134
+    },
+    {
+      "holdout": "H2_2025_04_01_to_end",
+      "cutoff": "2025-04-01",
+      "train_rows": 136520.0,
+      "valid_rows": 8721.0,
+      "valid_positive_rate": 0.0784313725490196,
+      "best_iteration": 1393.0,
+      "roc_auc": 0.7570851951537005
+    },
+    {
+      "holdout": "H3_2025_05_01_to_end",
+      "cutoff": "2025-05-01",
+      "train_rows": 141015.0,
+      "valid_rows": 4226.0,
+      "valid_positive_rate": 0.08589682915286323,
+      "best_iteration": 1344.0,
+      "roc_auc": 0.7706795201206045
+    },
+    {
+      "holdout": "LATE_HOLDOUT_MEAN",
+      "cutoff": NaN,
+      "train_rows": NaN,
+      "valid_rows": NaN,
+      "valid_positive_rate": NaN,
+      "best_iteration": NaN,
+      "roc_auc": 0.7661768122867395
+    },
+    {
+      "holdout": "LATE_HOLDOUT_MIN",
+      "cutoff": NaN,
+      "train_rows": NaN,
+      "valid_rows": NaN,
+      "valid_positive_rate": NaN,
+      "best_iteration": NaN,
+      "roc_auc": 0.7570851951537005
+    }
+  ],
+  "artifacts": {
+    "metrics": "reports/validation/late_holdouts/late_holdouts_xgb_hpo_time_regime_probe_20260619T041911Z/late_holdout_metrics.csv",
+    "predictions": "reports/validation/late_holdouts/late_holdouts_xgb_hpo_time_regime_probe_20260619T041911Z/late_holdout_predictions.csv"
+  }
+}

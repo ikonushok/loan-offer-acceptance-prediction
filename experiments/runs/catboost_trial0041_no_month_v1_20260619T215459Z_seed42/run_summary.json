@@ -1,0 +1,172 @@
+{
+  "run_id": "catboost_trial0041_no_month_v1_20260619T215459Z_seed42",
+  "created_at_utc": "2026-06-19T21:59:06.052594+00:00",
+  "validation_level": "L3_partial_time_holdout",
+  "model": "CatBoostClassifier",
+  "seed": 42,
+  "config_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/feature_experiments/catboost_trial0041_no_month_v1.json",
+  "params": {
+    "iterations": 2144,
+    "learning_rate": 0.017545106180058,
+    "depth": 5,
+    "l2_leaf_reg": 35.03487931972861,
+    "auto_class_weights": "SqrtBalanced",
+    "verbose": 200,
+    "bagging_temperature": 4.816112697203057,
+    "border_count": 64,
+    "grow_policy": "Depthwise",
+    "min_data_in_leaf": 114,
+    "random_strength": 0.1789962812672148
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "time_features": {
+    "enabled": true,
+    "include_day_num": true,
+    "include_month": false,
+    "include_dayofweek": false,
+    "include_week": true
+  },
+  "sample_weight": {
+    "enabled": false
+  },
+  "sample_weight_stats": null,
+  "train_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/train_apps.csv",
+  "test_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/test_apps.csv",
+  "train_sha256": "988e874ae9a877642537822ae5399435839799c32fded503feff7ccdf88506d7",
+  "test_sha256": "74f788c6d38a4ce2784804446d8a257715138aaa43580035bcbe59765c890904",
+  "target": "target_value",
+  "positive_class": 1,
+  "excluded_features": [
+    "front_id",
+    "decision_day"
+  ],
+  "categorical_features": [
+    "db_group_last",
+    "fl_adminarea"
+  ],
+  "feature_count": 40,
+  "feature_columns": [
+    "loan_amount_last",
+    "overdraft_limit_min",
+    "overdraft_limit_max",
+    "offered_rate",
+    "cb_rate",
+    "corp_credit_products",
+    "sum_deb_ul_90",
+    "sum_deb_ul_30",
+    "cnt_deb_loan_90",
+    "cnt_deb_ul_ip_90",
+    "cnt_deb_ul_ip_30",
+    "balance_rur_amt_30_min",
+    "cnt_cred_loan_90",
+    "loan_rev_max_start_non_fin",
+    "loan_rev_min_start_fin",
+    "app_term_mean_360",
+    "overdraft_app_term_max_360",
+    "days_from_authperson_registration",
+    "fl_hdb_bki_total_active_products",
+    "corp_list",
+    "count_all_corp_dashboard_events",
+    "p75_time_spent_minutes",
+    "sum_deb_investment_90",
+    "db_group_last",
+    "fl_adminarea",
+    "decision_day_num",
+    "decision_week",
+    "context_offer_count",
+    "offered_rate_context_spread",
+    "offered_rate_minus_context_min",
+    "offered_rate_minus_context_mean",
+    "offered_rate_rank_pct_in_context",
+    "overdraft_limit_min_context_spread",
+    "overdraft_limit_min_minus_context_min",
+    "overdraft_limit_min_minus_context_mean",
+    "overdraft_limit_min_rank_pct_in_context",
+    "overdraft_limit_max_context_spread",
+    "overdraft_limit_max_minus_context_min",
+    "overdraft_limit_max_minus_context_mean",
+    "overdraft_limit_max_rank_pct_in_context"
+  ],
+  "validation_policy": {
+    "type": "rolling_time_holdout",
+    "cutoffs": [
+      "2025-01-01",
+      "2025-03-01",
+      "2025-04-01"
+    ],
+    "reason": "test period is future-dated relative to train; random CV is not primary validation"
+  },
+  "fold_metrics": [
+    {
+      "fold": 1,
+      "cutoff": "2025-01-01",
+      "train_start": "2024-02-01",
+      "train_end": "2024-12-30",
+      "valid_start": "2025-01-02",
+      "valid_end": "2025-02-28",
+      "train_rows": 123855.0,
+      "valid_rows": 7612,
+      "valid_positive_rate": 0.10759327377824487,
+      "best_iteration": 633.0,
+      "roc_auc": 0.7868177343372397
+    },
+    {
+      "fold": 2,
+      "cutoff": "2025-03-01",
+      "train_start": "2024-02-01",
+      "train_end": "2025-02-28",
+      "valid_start": "2025-03-01",
+      "valid_end": "2025-03-31",
+      "train_rows": 131467.0,
+      "valid_rows": 5053,
+      "valid_positive_rate": 0.09321195329507223,
+      "best_iteration": 871.0,
+      "roc_auc": 0.7899706318734528
+    },
+    {
+      "fold": 3,
+      "cutoff": "2025-04-01",
+      "train_start": "2024-02-01",
+      "train_end": "2025-03-31",
+      "valid_start": "2025-04-01",
+      "valid_end": "2025-06-05",
+      "train_rows": 136520.0,
+      "valid_rows": 8721,
+      "valid_positive_rate": 0.0784313725490196,
+      "best_iteration": 734.0,
+      "roc_auc": 0.749390247008172
+    },
+    {
+      "fold": "OOF_TIME_HOLDOUT",
+      "cutoff": "",
+      "train_start": "",
+      "train_end": "",
+      "valid_start": "",
+      "valid_end": "",
+      "train_rows": NaN,
+      "valid_rows": 21386,
+      "valid_positive_rate": 0.09230337604040026,
+      "best_iteration": NaN,
+      "roc_auc": 0.7717962165685334
+    }
+  ],
+  "artifacts": {
+    "config_used": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/catboost_trial0041_no_month_v1_20260619T215459Z_seed42/config_used.json",
+    "fold_metrics": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/catboost_trial0041_no_month_v1_20260619T215459Z_seed42/fold_metrics.csv",
+    "valid_predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/catboost_trial0041_no_month_v1_20260619T215459Z_seed42/valid_predictions_time.csv",
+    "test_predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/catboost_trial0041_no_month_v1_20260619T215459Z_seed42/test_predictions.csv",
+    "feature_manifest": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/catboost_trial0041_no_month_v1_20260619T215459Z_seed42/feature_manifest.csv",
+    "summary": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/catboost_trial0041_no_month_v1_20260619T215459Z_seed42/run_summary.json"
+  },
+  "risks": [
+    "Submission row contract unresolved; this script predicts only test_apps.csv rows.",
+    "Repeated context/sibling-offer groups exist; time split is primary mitigation.",
+    "No hyperparameter tuning performed.",
+    "CatBoost auto_class_weights makes scores useful for ranking but not calibrated probabilities."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "train": "data/raw/train_apps.csv",
+  "test": "data/raw/test_apps.csv",
+  "out_dir": "experiments/runs",
+  "run_prefix": "catboost_trial0041_no_month_v1",
+  "seed": 42,
+  "cutoffs": ["2025-01-01","2025-03-01","2025-04-01"],
+  "model": {"iterations":2144,"learning_rate":0.017545106180058,"depth":5,"l2_leaf_reg":35.03487931972861,"auto_class_weights":"SqrtBalanced","verbose":200,"bagging_temperature":4.816112697203057,"border_count":64,"grow_policy":"Depthwise","min_data_in_leaf":114,"random_strength":0.1789962812672148},
+  "time_features": {"enabled":true,"include_day_num":true,"include_month":false,"include_dayofweek":false,"include_week":true},
+  "feature_engineering": {"enabled":true,"add_pairwise_features":false,"add_missing_flags":false,"add_context_offer_features":true}
+}

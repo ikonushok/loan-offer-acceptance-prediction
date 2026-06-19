@@ -1,0 +1,46 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/candidate_20260621_upload3_full_champion_no_month_c30_x70.csv",
+  "sha256": "b238d4265b08e71fd2f2efcd6e5eec7287203fb9023d634dc4cb540f045391bd",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "blend": "full_champion_no_month_rank*0.3 + xgb_no_month_rank*0.7 (rank percentile on test)",
+    "champion_no_month": "t070_nm*0.70 + t041_nm*0.04 + t164_nm*0.26 (ALL three trials with calendar no_month)",
+    "source_runs": {
+      "t070_nm": "experiments/runs/catboost_trial0070_no_month_v1_20260619T214438Z_seed42",
+      "t041_nm": "experiments/runs/catboost_trial0041_no_month_v1_20260619T215459Z_seed42",
+      "t164_nm": "experiments/runs/catboost_trial0164_no_month_v1_20260619T220243Z_seed42",
+      "xgb_no_month": "experiments/runs/xgb_hpo_time_regime_no_month_v1_20260619T055715Z_seed42"
+    },
+    "weights": {
+      "champion_no_month": 0.3,
+      "xgb_no_month": 0.7
+    }
+  },
+  "selection": {
+    "method": "offline late-holdout scan, lh_min gated >= best A; no leaderboard",
+    "note": "Calendar extended to FULL champion (all 3 trials), not just trial0070."
+  },
+  "late_holdout": {
+    "lh_mean": 0.7692006569965125,
+    "lh_min": 0.7583798288180325,
+    "H1": 0.7709838013110856,
+    "H2": 0.7583798288180325,
+    "H3": 0.7782383408604198
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "probability_range_ok": true,
+    "unique_predictions": 35138
+  },
+  "known_risks": [
+    "Calendar no_month extrapolates to unseen months.",
+    "Full-champion calendar may not beat single-trial three-way; compare offline.",
+    "Weights offline-selected, no LB probing."
+  ],
+  "created_at_utc": "2026-06-19T22:07:45.287617+00:00"
+}

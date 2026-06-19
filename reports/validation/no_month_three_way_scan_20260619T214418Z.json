@@ -1,0 +1,19 @@
+{
+  "reference_A": {
+    "w_champ": 0.2,
+    "w_cat": 0.0,
+    "w_xgb": 0.8,
+    "lh_mean": 0.7680740831194258,
+    "lh_min": 0.7582847822970806,
+    "public": 76.505
+  },
+  "best_gated": {
+    "w_champ": 0.1,
+    "w_cat": 0.25,
+    "w_xgb": 0.65,
+    "lh_mean": 0.7689972009150834,
+    "lh_min": 0.7583798288180323
+  },
+  "scan_csv": "reports/validation/no_month_three_way_scan_20260619T214418Z.csv",
+  "amplification_note": "offline lh_mean -> public ~27x (no_month подтвердил)."
+}

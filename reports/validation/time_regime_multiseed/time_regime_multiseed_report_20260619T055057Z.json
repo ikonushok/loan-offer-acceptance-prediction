@@ -1,0 +1,58 @@
+{
+  "created_at_utc": "2026-06-19T05:55:29.441909+00:00",
+  "validation_level": "L4_multiseed_and_ablation_diagnostic",
+  "train_sha256": "988e874ae9a877642537822ae5399435839799c32fded503feff7ccdf88506d7",
+  "test_sha256": "74f788c6d38a4ce2784804446d8a257715138aaa43580035bcbe59765c890904",
+  "seed_artifacts": {
+    "42": {
+      "valid": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/feature_family_probes/feature_probe_time_regime_20260619T041432Z_valid_predictions.csv",
+      "late": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/late_holdouts/late_holdouts_xgb_hpo_time_regime_probe_20260619T041911Z/late_holdout_predictions.csv",
+      "test": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_probe_full_20260619T0420Z_seed42/test_predictions.csv",
+      "run_dir": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_probe_full_20260619T0420Z_seed42"
+    },
+    "43": {
+      "run_dir": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed43",
+      "valid": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed43/valid_predictions_time.csv",
+      "late": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed43/late_holdout_predictions.csv",
+      "test": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed43/test_predictions.csv"
+    },
+    "44": {
+      "run_dir": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed44",
+      "valid": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed44/valid_predictions_time.csv",
+      "late": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed44/late_holdout_predictions.csv",
+      "test": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed44/test_predictions.csv"
+    },
+    "45": {
+      "run_dir": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed45",
+      "valid": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed45/valid_predictions_time.csv",
+      "late": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed45/late_holdout_predictions.csv",
+      "test": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_multiseed_v1_20260619T055057Z_seed45/test_predictions.csv"
+    }
+  },
+  "scan_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/time_regime_multiseed/multiseed_champion_time_scan_20260619T055057Z.csv",
+  "ablation_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/time_regime_multiseed/time_regime_ablation_20260619T055057Z.csv",
+  "best": {
+    "w_champion": 0.16000000000000003,
+    "w_time_multiseed": 0.84,
+    "fold1_auc": 0.794998694159595,
+    "fold2_auc": 0.7963824565988392,
+    "fold3_auc": 0.7581162452604076,
+    "oof_auc": 0.7818394485826563,
+    "H1_2025_03_01_to_end": 0.7704489450903589,
+    "H2_2025_04_01_to_end": 0.7580472114715057,
+    "H3_2025_05_01_to_end": 0.7711708666454153,
+    "lh_mean": 0.7665556744024267,
+    "lh_min": 0.7580472114715057,
+    "selection_score": 0.9560847357175286
+  },
+  "built": {
+    "submission": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/upload_20260620/candidate_20260620_upload5_RETEST_xgb_time_regime_multiseed_c16_t84.csv",
+    "sha256": "e805285be2955fd771820ef32b61602e212da42624455ad16e280e0d9b213998"
+  },
+  "baseline_upload3": {
+    "fold3": 0.7571,
+    "lh_mean": 0.7665,
+    "lh_min": 0.7579
+  },
+  "risk": "Offline diagnostics only; no leaderboard probing."
+}

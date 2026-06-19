@@ -1,0 +1,59 @@
+{
+  "file_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/upload_20260620/candidate_20260620_upload4_RETEST_three_way_c20_x00_t80.csv",
+  "sha256": "46d7f44306626b6a2b6b65bb2aaa4defca61165b58988c081de16a770fc8668b",
+  "format": "test-only, 36311 rows, front_id,target_value, order as test_apps.csv, target_value %.10f",
+  "generation": {
+    "script": "scripts/scan_time_regime_three_way_blend.py",
+    "blend": "champion_rank*0.20 + xgb_hpo_rank*0.00 + xgb_time_regime_rank*0.80",
+    "source_runs": {
+      "champion": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/blend_ext_raw_fold3best070_t041004_t164026_20260617T123116Z",
+      "xgb_hpo": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_depth3_child80_reg30_v1_20260617T235100Z_seed42",
+      "xgb_time_regime": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_probe_full_20260619T0420Z_seed42"
+    },
+    "weights": {
+      "champion_rank": 0.2,
+      "xgb_hpo_rank": 0.0,
+      "xgb_time_regime_rank": 0.8
+    }
+  },
+  "selection": {
+    "method": "offline 3-way rank-blend scan on Fold3 + late-holdout; no leaderboard",
+    "scan_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/time_regime_three_way/time_regime_three_way_scan_20260619T052410Z.csv",
+    "best_row": {
+      "w_champion": 0.2,
+      "w_xgb_hpo": 0.0,
+      "w_xgb_time_regime": 0.8,
+      "fold1_auc": 0.794622669641071,
+      "fold2_auc": 0.7969417391602514,
+      "fold3_auc": 0.7580344779663064,
+      "oof_auc": 0.7817820492906862,
+      "H1_2025_03_01_to_end": 0.7704807462395227,
+      "H2_2025_04_01_to_end": 0.7579156925535189,
+      "H3_2025_05_01_to_end": 0.7711359232786292,
+      "lh_mean": 0.7665107873572236,
+      "lh_min": 0.7579156925535189,
+      "fold_mean": 0.7831996289225428,
+      "selection_score": 0.9560194068488002
+    }
+  },
+  "submission_checks": {
+    "rows": 36311,
+    "columns": [
+      "front_id",
+      "target_value"
+    ],
+    "front_id_order_matches_test_apps": true,
+    "front_id_unique": true,
+    "probability_range_ok": true,
+    "nan_count": 0,
+    "unique_predictions": 33770
+  },
+  "upload_recommendation": "DO_NOT_UPLOAD. This artifact is byte-identical to upload3 because the best three-way scan assigned zero weight to xgb_hpo.",
+  "known_risks": [
+    "Duplicate of candidate_20260620_upload3_RETEST_xgb_time_regime_rank_c20_x80.csv; uploading it would waste a daily submission slot.",
+    "Time-regime features may overfit validation periods and extrapolate poorly to unseen test months.",
+    "Blend weights selected offline by late-holdout scan, not by leaderboard.",
+    "Rank transform optimizes ordering and discards calibration scale; acceptable for ROC-AUC."
+  ],
+  "created_at_utc": "2026-06-19T05:24:15.158175+00:00"
+}

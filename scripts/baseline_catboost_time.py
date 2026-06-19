@@ -318,12 +318,50 @@ def prepare_features(
     time_features_enabled = bool(time_features_cfg.get("enabled", True))
     derived_time_features: list[str] = []
 
+    # Granular calendar flags; defaults reproduce the historical behaviour
+    # (day_num + month + dayofweek). The "no_month" regime (day_num + week)
+    # is the public-confirmed lever, so it is selectable here.
+    include_day_num = bool(time_features_cfg.get("include_day_num", True))
+    include_month = bool(time_features_cfg.get("include_month", True))
+    include_dayofweek = bool(time_features_cfg.get("include_dayofweek", True))
+    include_week = bool(time_features_cfg.get("include_week", False))
+    # Cyclic yearly-seasonality features. Unlike categorical month (which sees
+    # unseen test months) sin/cos of day-of-year / week-of-year repeat every
+    # year, so December 2025 (test) encodes identically to December 2024
+    # (train). This extrapolates seasonality to the future test period.
+    include_cyclic_doy = bool(time_features_cfg.get("include_cyclic_doy", False))
+    include_cyclic_woy = bool(time_features_cfg.get("include_cyclic_woy", False))
+
     if time_features_enabled:
         for df, days in [(train_x, train_days), (test_x, test_days)]:
-            df["decision_day_num"] = (days - min_day).dt.days.astype("int32")
-            df["decision_month"] = days.dt.to_period("M").astype(str)
-            df["decision_dayofweek"] = days.dt.dayofweek.astype("int8")
-        derived_time_features = ["decision_day_num", "decision_month", "decision_dayofweek"]
+            if include_day_num:
+                df["decision_day_num"] = (days - min_day).dt.days.astype("int32")
+            if include_month:
+                df["decision_month"] = days.dt.to_period("M").astype(str)
+            if include_dayofweek:
+                df["decision_dayofweek"] = days.dt.dayofweek.astype("int8")
+            if include_week:
+                df["decision_week"] = days.dt.isocalendar().week.astype("int16")
+            if include_cyclic_doy:
+                doy = days.dt.dayofyear.astype("float64")
+                df["decision_doy_sin"] = np.sin(2.0 * np.pi * doy / 365.25)
+                df["decision_doy_cos"] = np.cos(2.0 * np.pi * doy / 365.25)
+            if include_cyclic_woy:
+                woy = days.dt.isocalendar().week.astype("float64")
+                df["decision_woy_sin"] = np.sin(2.0 * np.pi * woy / 52.0)
+                df["decision_woy_cos"] = np.cos(2.0 * np.pi * woy / 52.0)
+        if include_day_num:
+            derived_time_features.append("decision_day_num")
+        if include_month:
+            derived_time_features.append("decision_month")
+        if include_dayofweek:
+            derived_time_features.append("decision_dayofweek")
+        if include_week:
+            derived_time_features.append("decision_week")
+        if include_cyclic_doy:
+            derived_time_features.extend(["decision_doy_sin", "decision_doy_cos"])
+        if include_cyclic_woy:
+            derived_time_features.extend(["decision_woy_sin", "decision_woy_cos"])
 
     excluded_features = excluded_features or []
     forbidden_exclusions = {ID_COL, TARGET}

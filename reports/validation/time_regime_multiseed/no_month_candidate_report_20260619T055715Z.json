@@ -1,0 +1,78 @@
+{
+  "run_dir": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/experiments/runs/xgb_hpo_time_regime_no_month_v1_20260619T055715Z_seed42",
+  "scan_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/time_regime_multiseed/no_month_champion_scan_20260619T055715Z.csv",
+  "submission": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/submissions/upload_20260620/candidate_20260620_upload6_RETEST_xgb_time_regime_no_month_c14_n86.csv",
+  "sha256": "287ef3b82189afcb685e1aaec2382cf328ac773d96baf4855f9064b39909b70e",
+  "best": {
+    "w_champion": 0.14,
+    "w_no_month": 0.86,
+    "fold1_auc": 0.794739683007017,
+    "fold2_auc": 0.7971873230521722,
+    "fold3_auc": 0.7581526267038339,
+    "oof_auc": 0.7819471489136228,
+    "H1_2025_03_01_to_end": 0.7712977990654509,
+    "H2_2025_04_01_to_end": 0.7581109699511106,
+    "H3_2025_05_01_to_end": 0.7748359979433334,
+    "lh_mean": 0.7680815889866316,
+    "lh_min": 0.7581109699511106,
+    "selection_score": 0.9576197456625901
+  },
+  "standalone_fold_metrics": [
+    {
+      "fold": 1,
+      "best_iteration": 1399.0,
+      "roc_auc": 0.7937261962729356,
+      "valid_rows": 7612
+    },
+    {
+      "fold": 2,
+      "best_iteration": 1382.0,
+      "roc_auc": 0.7967825729963367,
+      "valid_rows": 5053
+    },
+    {
+      "fold": 3,
+      "best_iteration": 1389.0,
+      "roc_auc": 0.7574424609281489,
+      "valid_rows": 8721
+    },
+    {
+      "fold": "OOF_TIME_HOLDOUT",
+      "best_iteration": NaN,
+      "roc_auc": 0.7821521762095369,
+      "valid_rows": 21386
+    }
+  ],
+  "standalone_late_metrics": [
+    {
+      "holdout": "H1_2025_03_01_to_end",
+      "best_iteration": 1385.0,
+      "roc_auc": 0.7714471649807255,
+      "valid_rows": 13774.0
+    },
+    {
+      "holdout": "H2_2025_04_01_to_end",
+      "best_iteration": 1389.0,
+      "roc_auc": 0.7574424609281489,
+      "valid_rows": 8721.0
+    },
+    {
+      "holdout": "H3_2025_05_01_to_end",
+      "best_iteration": 1386.0,
+      "roc_auc": 0.774613144838829,
+      "valid_rows": 4226.0
+    },
+    {
+      "holdout": "LATE_HOLDOUT_MEAN",
+      "best_iteration": NaN,
+      "roc_auc": 0.7678342569159011,
+      "valid_rows": NaN
+    },
+    {
+      "holdout": "LATE_HOLDOUT_MIN",
+      "best_iteration": NaN,
+      "roc_auc": 0.7574424609281489,
+      "valid_rows": NaN
+    }
+  ]
+}

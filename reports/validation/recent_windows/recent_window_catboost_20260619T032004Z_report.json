@@ -1,0 +1,56 @@
+{
+  "created_at_utc": "2026-06-19T03:27:14.043316+00:00",
+  "validation_level": "L3_diagnostic_recent_window_cv",
+  "model": "catboost",
+  "config_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0070_20260617T072835Z.json",
+  "windows": [
+    "expanding",
+    90,
+    120,
+    180,
+    240,
+    365
+  ],
+  "train_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/train_apps.csv",
+  "test_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/test_apps.csv",
+  "train_sha256": "988e874ae9a877642537822ae5399435839799c32fded503feff7ccdf88506d7",
+  "test_sha256": "74f788c6d38a4ce2784804446d8a257715138aaa43580035bcbe59765c890904",
+  "feature_count": 38,
+  "categorical_cols": [
+    "db_group_last",
+    "fl_adminarea"
+  ],
+  "best_by_fold3": [
+    {
+      "fold": 3,
+      "cutoff": "2025-04-01",
+      "train_start": "2024-02-01",
+      "train_end": "2025-03-31",
+      "valid_start": "2025-04-01",
+      "valid_end": "2025-06-05",
+      "train_rows": 136520.0,
+      "valid_rows": 8721,
+      "valid_positive_rate": 0.0784313725490196,
+      "best_iteration": 693.0,
+      "roc_auc": 0.7524366471734893,
+      "model": "catboost",
+      "config": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/optuna_revalidated/catboost_optuna_context_offer_revalidated_trial0070_20260617T072835Z.json",
+      "window_days": NaN,
+      "window_label": "expanding",
+      "feature_count": 38
+    }
+  ],
+  "artifacts": {
+    "summary_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_20260619T032004Z_summary.csv",
+    "compact_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_20260619T032004Z_compact.csv",
+    "valid_predictions": [
+      "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_expanding_20260619T032004Z_valid_predictions.csv",
+      "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_90d_20260619T032004Z_valid_predictions.csv",
+      "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_120d_20260619T032004Z_valid_predictions.csv",
+      "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_180d_20260619T032004Z_valid_predictions.csv",
+      "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_240d_20260619T032004Z_valid_predictions.csv",
+      "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/recent_windows/recent_window_catboost_365d_20260619T032004Z_valid_predictions.csv"
+    ]
+  },
+  "risk": "Diagnostic only; no submission generated. Window selected on validation would need late-holdout/red-team before upload."
+}

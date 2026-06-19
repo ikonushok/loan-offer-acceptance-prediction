@@ -1,0 +1,24 @@
+{
+  "created_at_utc": "2026-06-19T05:26:07.703666+00:00",
+  "scan_step": 0.01,
+  "scan_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/time_regime_three_way/time_regime_three_way_scan_20260619T052435Z.csv",
+  "correlations_csv": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/time_regime_three_way/time_regime_three_way_correlations_20260619T052435Z.csv",
+  "best_by_lh_mean": {
+    "w_champion": 0.2,
+    "w_xgb_hpo": 0.0,
+    "w_xgb_time_regime": 0.8,
+    "fold1_auc": 0.794622669641071,
+    "fold2_auc": 0.7969417391602514,
+    "fold3_auc": 0.7580344779663064,
+    "oof_auc": 0.7817820492906862,
+    "H1_2025_03_01_to_end": 0.7704807462395227,
+    "H2_2025_04_01_to_end": 0.7579156925535189,
+    "H3_2025_05_01_to_end": 0.7711359232786292,
+    "lh_mean": 0.7665107873572236,
+    "lh_min": 0.7579156925535189,
+    "fold_mean": 0.7831996289225428,
+    "selection_score": 0.9560194068488002
+  },
+  "built": null,
+  "note": "Offline Fold3 + late-holdout scan only; no leaderboard signal used."
+}

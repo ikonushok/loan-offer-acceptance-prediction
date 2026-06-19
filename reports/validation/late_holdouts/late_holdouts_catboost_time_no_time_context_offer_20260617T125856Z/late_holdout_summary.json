@@ -1,0 +1,144 @@
+{
+  "run_id": "late_holdouts_catboost_time_no_time_context_offer_20260617T125856Z",
+  "created_at_utc": "2026-06-17T12:59:55.522378+00:00",
+  "validation_level": "L4_late_holdout_battery",
+  "config_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/configs/baseline_catboost_time_no_time_context_offer.json",
+  "train_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/train_apps.csv",
+  "test_path": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/data/raw/test_apps.csv",
+  "train_sha256": "988e874ae9a877642537822ae5399435839799c32fded503feff7ccdf88506d7",
+  "test_sha256": "74f788c6d38a4ce2784804446d8a257715138aaa43580035bcbe59765c890904",
+  "seed": 42,
+  "model": "CatBoostClassifier",
+  "params": {
+    "iterations": 800,
+    "learning_rate": 0.03,
+    "depth": 6,
+    "l2_leaf_reg": 6.0,
+    "auto_class_weights": "Balanced",
+    "verbose": 100
+  },
+  "feature_engineering": {
+    "enabled": true,
+    "add_pairwise_features": false,
+    "add_missing_flags": false,
+    "add_context_offer_features": true
+  },
+  "time_features": {
+    "enabled": false
+  },
+  "feature_count": 38,
+  "categorical_features": [
+    "db_group_last",
+    "fl_adminarea"
+  ],
+  "holdouts": [
+    {
+      "name": "H1_2025_03_01_to_end",
+      "cutoff": "2025-03-01"
+    },
+    {
+      "name": "H2_2025_04_01_to_end",
+      "cutoff": "2025-04-01"
+    },
+    {
+      "name": "H3_2025_05_01_to_end",
+      "cutoff": "2025-05-01"
+    }
+  ],
+  "metrics": [
+    {
+      "holdout": "H1_2025_03_01_to_end",
+      "cutoff": "2025-03-01",
+      "valid_end_requested": "",
+      "train_start": "2024-02-01",
+      "train_end": "2025-02-28",
+      "valid_start": "2025-03-01",
+      "valid_end": "2025-06-05",
+      "train_rows": 131467.0,
+      "valid_rows": 13774.0,
+      "valid_positive_rate": 0.08385363728764339,
+      "best_iteration": 487.0,
+      "roc_auc": 0.761162357731024
+    },
+    {
+      "holdout": "H2_2025_04_01_to_end",
+      "cutoff": "2025-04-01",
+      "valid_end_requested": "",
+      "train_start": "2024-02-01",
+      "train_end": "2025-03-31",
+      "valid_start": "2025-04-01",
+      "valid_end": "2025-06-05",
+      "train_rows": 136520.0,
+      "valid_rows": 8721.0,
+      "valid_positive_rate": 0.0784313725490196,
+      "best_iteration": 611.0,
+      "roc_auc": 0.7484816204585953
+    },
+    {
+      "holdout": "H3_2025_05_01_to_end",
+      "cutoff": "2025-05-01",
+      "valid_end_requested": "",
+      "train_start": "2024-02-01",
+      "train_end": "2025-04-30",
+      "valid_start": "2025-05-01",
+      "valid_end": "2025-06-05",
+      "train_rows": 141015.0,
+      "valid_rows": 4226.0,
+      "valid_positive_rate": 0.08589682915286323,
+      "best_iteration": 562.0,
+      "roc_auc": 0.7608996562000586
+    },
+    {
+      "holdout": "LATE_HOLDOUT_MEAN",
+      "cutoff": "",
+      "valid_end_requested": "",
+      "train_start": "",
+      "train_end": "",
+      "valid_start": "",
+      "valid_end": "",
+      "train_rows": null,
+      "valid_rows": null,
+      "valid_positive_rate": null,
+      "best_iteration": null,
+      "roc_auc": 0.7568478781298927
+    },
+    {
+      "holdout": "LATE_HOLDOUT_STD",
+      "cutoff": "",
+      "valid_end_requested": "",
+      "train_start": "",
+      "train_end": "",
+      "valid_start": "",
+      "valid_end": "",
+      "train_rows": null,
+      "valid_rows": null,
+      "valid_positive_rate": null,
+      "best_iteration": null,
+      "roc_auc": 0.005916809590226749
+    },
+    {
+      "holdout": "LATE_HOLDOUT_MIN",
+      "cutoff": "",
+      "valid_end_requested": "",
+      "train_start": "",
+      "train_end": "",
+      "valid_start": "",
+      "valid_end": "",
+      "train_rows": null,
+      "valid_rows": null,
+      "valid_positive_rate": null,
+      "best_iteration": null,
+      "roc_auc": 0.7484816204585953
+    }
+  ],
+  "artifacts": {
+    "metrics": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/late_holdouts/late_holdouts_catboost_time_no_time_context_offer_20260617T125856Z/late_holdout_metrics.csv",
+    "predictions": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/late_holdouts/late_holdouts_catboost_time_no_time_context_offer_20260617T125856Z/late_holdout_predictions.csv",
+    "feature_manifest": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/late_holdouts/late_holdouts_catboost_time_no_time_context_offer_20260617T125856Z/feature_manifest.csv",
+    "summary": "/Users/bobrsubr/PycharmProjects/_researches/loan-offer-acceptance-prediction/reports/validation/late_holdouts/late_holdouts_catboost_time_no_time_context_offer_20260617T125856Z/late_holdout_summary.json"
+  },
+  "notes": [
+    "Holdouts may overlap, so no combined OOF ROC-AUC is reported.",
+    "This script does not predict test_apps.csv and does not build a submission."
+  ]
+}

@@ -1,0 +1,13 @@
+scope,left,right,pearson,spearman
+OOF_TIME_HOLDOUT,champion,xgb_hpo,0.8761947570736359,0.9621306543838
+OOF_TIME_HOLDOUT,champion,foldsafe_segment_te,0.9755473813370619,0.9751036039813624
+OOF_TIME_HOLDOUT,xgb_hpo,foldsafe_segment_te,0.8974169045740731,0.9496661267668813
+fold_1,champion,xgb_hpo,0.8794865990862643,0.969857127952115
+fold_1,champion,foldsafe_segment_te,0.9779064438474466,0.9768569891197005
+fold_1,xgb_hpo,foldsafe_segment_te,0.9020254747879394,0.9563823511405286
+fold_2,champion,xgb_hpo,0.8703177729171924,0.9611806409038932
+fold_2,champion,foldsafe_segment_te,0.9780550806578915,0.9776748461927889
+fold_2,xgb_hpo,foldsafe_segment_te,0.8952673345241128,0.949221109379844
+fold_3,champion,xgb_hpo,0.8886599058776256,0.9588753023632032
+fold_3,champion,foldsafe_segment_te,0.971576355899911,0.9725971544152658
+fold_3,xgb_hpo,foldsafe_segment_te,0.9002956623067372,0.9449423743391876
