@@ -41,10 +41,6 @@
 ## Структура проекта
 
     data/raw/              # исходные CSV-файлы, не коммитятся
-    data/interim/          # промежуточные артефакты: folds, schema reports
-    data/processed/        # подготовленные признаки, если понадобятся
-
-    notebooks/             # EDA и диагностические ноутбуки
 
     src/alfa_credit/       # основной Python-пакет проекта
       data.py              # загрузка данных и schema checks
@@ -57,11 +53,13 @@
       submit.py            # сборка и проверка submission
       utils.py             # вспомогательные функции
 
-    scripts/               # CLI-скрипты для запусков
-    experiments/           # логи экспериментов, OOF/test predictions, configs
-    submissions/           # финальные CSV-сабмиты и submission cards
-    reports/               # отчеты по данным, EDA, leakage, validation
-    tests/                 # smoke/regression тесты
+    scripts/               # CLI-скрипты: обучение, HPO, бленды, диагностика
+    configs/               # JSON-конфиги экспериментов и HPO
+    experiments/runs/      # артефакты запусков: OOF/test predictions, метрики
+    submissions/           # финальные CSV-сабмиты, submission cards, папки upload
+    reports/validation/    # late-holdout батарея, daily progress, weight scans
+    tests/                 # contract-тесты (leakage, submission format, weights)
+    agents/                # 21 специализированный агент (см. agents/README.md)
 
 ## Рекомендуемый порядок работы
 
@@ -103,12 +101,15 @@
 
 ### 3. Validation design
 
-До доверия к ROC-AUC нужно определить безопасную CV-схему:
+Используется **rolling time folds** с расширяющимся обучающим окном:
 
-- `StratifiedKFold`, если нет групповой или временной структуры;
-- `GroupKFold` / `StratifiedGroupKFold`, если найдены повторяющиеся заявки, клиенты или офферы;
-- time holdout, если `decision_day` показывает временной сдвиг;
-- сохранение fold assignments для воспроизводимости.
+- Fold1: train до 2025-01-01, val 2025-01-01..03-01;
+- Fold2: train до 2025-03-01, val 2025-03-01..04-01;
+- Fold3: train до 2025-04-01, val 2025-04-01..06-05 (**primary selection criterion**).
+
+Дополнительно — **late holdouts** (H1/H2/H3) на расширяющихся будущих периодах для оценки drift-устойчивости (`lh_mean`, `lh_min`).
+
+Fold assignments детерминированы по `decision_day` (не по random seed).
 
 ### 4. Baseline model
 
@@ -123,29 +124,37 @@
 
 ### 5. Feature engineering
 
-Приоритетные группы признаков:
+Рабочие признаки (используются в champion):
 
-- `offered_rate - cb_rate`;
-- `offered_rate / cb_rate`;
-- отношение суммы заявки к `overdraft_limit_min` и `overdraft_limit_max`;
-- флаги попадания суммы в лимиты;
+- **context-offer features** — относительный ранг оффера внутри контекстной группы (стабильны при drift);
 - 30/90/360 activity ratios;
-- log-transform для денежных признаков;
-- missingness flags;
-- безопасная обработка категориальных признаков.
+- безопасная обработка категориальных признаков (`db_group_last`, `fl_adminarea`);
+- log-transform для денежных признаков.
 
-Все supervised-преобразования должны выполняться внутри CV-folds.
+Проверены и **закрыты** (экспериментально отрицательные):
+
+- `offered_rate - cb_rate`, `offered_rate / cb_rate` — temporal drift из-за нестационарности `cb_rate`;
+- rate/limit ratios (`loan_amount_to_limit_*`, `overdraft_limit_spread`) — тот же drift;
+- missingness flags — GBM ест NaN нативно, явные флаги переобучают (Fold3 −0.0017);
+- дроп дрейфующих фичей — Fold3 плоско, не помогает.
+
+Все supervised-преобразования выполняются внутри CV-folds.
 
 ### 6. Model training
 
-Кандидаты моделей:
+Проверенные модели и итоги:
 
-- CatBoost;
-- LightGBM;
-- XGBoost;
-- sklearn HistGradientBoosting;
-- ExtraTrees / RandomForest;
-- Logistic Regression как sanity baseline.
+| модель | лучший Fold3 | lh_mean | роль в финальном решении |
+|---|---|---|---|
+| **CatBoost** blend (t070×0.70 + t041×0.04 + t164×0.26) | 0.7548 | 0.7602 | champion-компонента rank-бленда |
+| **XGBoost HPO** (depth=3, child=80, reg=30) | 0.7550 | 0.7633 | диверсификатор; rank-blend w=0.49 дал public 76.388 |
+| XGBoost untuned | 0.7520 | 0.7631 | проверочный; rank-blend w=0.38 дал public 76.362 |
+| CatBoost HPO ext1 (150 trials, seed=137) | 0.7536 | — | закрыт (ниже champion, corr ~0.99) |
+| LightGBM HPO (100 trials) | 0.7520 | 0.7607 | закрыт (слабее XGB, corr 0.976) |
+| TabNet (attention NN) | OOF 0.6955 | 0.672 | закрыт (слишком слаб, бленд ухудшает) |
+| ExtraTrees | 0.7065 | — | закрыт |
+
+Финальное решение — **не одна модель, а rank-blend** двух GBM-семейств (CatBoost champion + XGBoost HPO). Standalone-метрики моделей ниже, чем у бленда, потому что прирост идёт за счёт ранговой диверсификации.
 
 Сравнивать можно только эксперименты с одинаковой CV-схемой, одинаковым target definition и понятной feature policy.
 
@@ -153,12 +162,13 @@
 
 Ансамбль допустим только при наличии aligned OOF/test predictions и подтвержденного прироста на OOF ROC-AUC.
 
-Возможные методы:
+Рабочий метод — **rank-percentile blend**:
 
-- simple mean;
-- weighted mean;
-- rank averaging;
-- stacking только через корректные OOF meta-features.
+    blend = champion_rank × (1 - w) + xgb_hpo_rank × w
+
+Rank-нормализация выполняется отдельно на каждом holdout (и на test) для корректности. Это ключевой рычаг: дал весь прирост 76.054 → 76.388. Оптимальный вес XGB по late-holdout скану: w = 0.65–0.70.
+
+Raw-probability blend и stacking проверены — не дают диверсификации (corr > 0.87 между GBM).
 
 ### 8. Submission build
 
@@ -182,29 +192,28 @@
 - L4 — robustness checks, alternative splits, leakage review.
 - L5 — submission readiness: sample-format check, hash, submission card, red-team review.
 
-## Стартовая команда для Codex
-
-    Use AGENTS.md + agents/context_router.md + agents/data_quality.md + agents/test_validation.md.
-
-    Mode: data_quality_review.
-
-    Task: Inspect train_apps.csv, test_apps.csv, and sample_submission.csv for the Alfa Bank credit-offer acceptance task.
-
-    Inputs:
-    - data/raw/train_apps.csv
-    - data/raw/test_apps.csv
-    - data/raw/sample_submission.csv
-
-    Constraints:
-    - Do not train a model yet.
-    - Do not use target_value outside train labels.
-    - Inspect full schema; do not rely only on representative PDF columns.
-    - Check target distribution, train/test schema compatibility, missingness, duplicates, front_id uniqueness, candidate repeated request/client/offer structure, decision_day temporal risk, and sample_submission compatibility.
-    - Save reports under reports/data_quality/.
-    - Report achieved validation level.
-
-    Stop if data files are missing, train/test schema cannot be aligned, target has unexpected values, or test rows cannot be mapped to sample_submission.
-
 ## Текущий статус
 
-Проект инициализирован. Следующий обязательный шаг — data quality review до построения baseline-модели.
+**Public best: 76.388** (ROC-AUC × 100). Стадия: оптимизация rank-blend весов.
+
+Champion — CatBoost blend (trial0070 × 0.70 + trial0041 × 0.04 + trial0164 × 0.26). Ключевой рычаг — rank-blend с HPO-XGBoost (weight scan 0.65–0.70 по late-holdout).
+
+### Загрузки и реальные результаты
+
+| дата | файл | offline Fold3 | offline lh_mean | Public AUC |
+|---|---|---|---|---|
+| ≤06-18 | champion, 1dp-округление | 0.7548 | 0.7602 | 75.448 |
+| 06-18 | `accepted_public_76054_3dp_fold3best070` (champion, 3dp) | 0.7548 | 0.7602 | **76.054** |
+| 06-19 #1 | `candidate…upload1_raw_unrounded_fold3best070` | 0.7548 | 0.7602 | 76.057 |
+| 06-19 #2 | `candidate…upload2_RETEST_xgb_rank_c62_x38` (untuned XGB, w=0.38) | 0.7566 | 0.7631 | 76.362 |
+| 06-19 #3 | `candidate…upload2_RETEST_xgb_hpo_rank_c51_x49` (HPO-XGB, w=0.49) | 0.7567 | 0.7638 | **76.388** |
+
+### Кандидаты на 06-20 (готовы, ещё не грузились)
+
+| слот | файл | w_xgb | offline lh_mean | offline lh_min | прогноз |
+|---|---|---|---|---|---|
+| #1 | `candidate_20260620_upload1_xgb_hpo_rank_c35_x65` | 0.65 | 0.764113 | **0.756306** | > 76.388 |
+| #2 | `candidate_20260620_upload2_xgb_hpo_rank_c30_x70` | 0.70 | **0.764126** | 0.756288 | > 76.388 |
+| #3 | резерв (мульти-seed XGB) | — | — | — | решить после #1/#2 |
+
+Закрытые направления: HPO (потолок Fold3 ≈ 0.755), feature engineering (temporal drift), adversarial weighting, pseudo-labeling, TabNet. Подробнее — `reports/validation/daily_progress_20260618.md`.
