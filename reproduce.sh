@@ -17,9 +17,7 @@ REPO=$(cd "$(dirname "$0")" && pwd)
 cd "$REPO"
 
 # Определяем Python (miniforge > system)
-if command -v python3.13 &>/dev/null; then
-    PY=python3.13
-elif [ -x "/opt/homebrew/Caskroom/miniforge/base/bin/python3" ]; then
+if [ -x "/opt/homebrew/Caskroom/miniforge/base/bin/python3" ]; then
     PY="/opt/homebrew/Caskroom/miniforge/base/bin/python3"
 else
     PY=python3

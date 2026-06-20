@@ -4,7 +4,7 @@
 
 **Финальный результат: ROC-AUC = 0.76744** (Public Leaderboard).
 
-Подробное описание решения — в [SOLUTION.md](SOLUTION.md).
+Подробное описание решения — в [SOLUTION.md](SOLUTION.md). Разведочный анализ данных — в [EDA-ноутбуке](notebooks/eda_final.ipynb).
 
 ## Quick Start — воспроизведение результата
 
