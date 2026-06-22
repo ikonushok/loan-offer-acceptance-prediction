@@ -1,32 +1,93 @@
 # Loan Offer Acceptance Prediction
 
-Проект для задачи Альфа-Банка × МФТИ «Отклик на кредитный оффер».
+> **Python ML pipeline** · CatBoost + XGBoost rank-blend · config-driven experiments · leakage-aware time-fold CV · `reproduce.sh` one-command rerun
 
-**Финальный результат: ROC-AUC = 0.76744** (Public Leaderboard).
+Воспроизводимый Python ML pipeline для задачи Альфа-Банка × МФТИ «Отклик на кредитный оффер».
+
+| | |
+|---|---|
+| **Результат** | ROC-AUC **0.76744** (Public Leaderboard) |
+| **Основной код** | Python-пакет [`src/alfa_credit/`](src/alfa_credit/) — 12 модулей, 46 `.py` файлов |
+| **Notebook** | Только отчётный слой: EDA и визуализация результатов |
+| **Эксперименты** | JSON-конфиги в [`configs/`](configs/), запуск через CLI-скрипты в [`scripts/`](scripts/) |
+| **Воспроизводимость** | `bash reproduce.sh` → `submissions/final/submission.csv` |
+| **Тесты** | Leakage guard, submission contract, sample weights |
+
+Основная ML-логика вынесена в Python-пакет `src/alfa_credit/`, а notebook используется как отчётный слой для EDA и демонстрации результатов. Эксперименты управляются через JSON-конфиги, запускаются CLI-скриптами и воспроизводятся одной командой.
 
 Подробное описание решения — в [SOLUTION.md](SOLUTION.md). Разведочный анализ данных — в [EDA-ноутбуке](notebooks/eda_final.ipynb).
 
-## Quick Start — воспроизведение результата
+---
+
+## Структура проекта
+
+Репозиторий организован как воспроизводимый Python ML pipeline, а не как эксперимент, состоящий только из notebook.
+
+- `src/alfa_credit/` — переиспользуемый Python-пакет: загрузка данных, feature engineering, валидация, метрики, обучение, inference, сборка submission.
+- `configs/` — JSON-конфигурации экспериментов и HPO.
+- `scripts/` — CLI-скрипты для обучения, HPO, блендов, диагностики и сборки submission.
+- `notebooks/` — EDA-ноутбук и отчётные визуализации.
+- `reports/` — сгенерированные отчёты: data quality, validation summaries, leakage review, drift audit.
+- `tests/` — автоматические тесты: проверка leakage, формата submission, корректности sample weights.
+- `submissions/` — итоговые submission-файлы и submission cards.
+- `experiments/runs/` — артефакты запусков: OOF/test predictions, метрики.
+- `agents/` — 21 специализированный агент (см. [agents/README.md](agents/README.md)).
+
+---
+
+## Почему это не notebook-only проект
+
+Хотя в репозитории есть notebook для EDA и отчётности, основная реализация вынесена в Python-пакет `src/alfa_credit/`. Notebook используется для визуализации и документирования экспериментов, а переиспользуемая логика — загрузка данных, feature engineering, валидация, обучение и inference — находится в модулях пакета, конфигурациях и CLI-скриптах.
+
+---
+
+## Воспроизводимость
+
+1. Установить зависимости:
 
 ```bash
-# 1. Установить зависимости
 pip install -r requirements.txt
-
-# 2. Положить данные
-#    data/raw/train_apps.csv
-#    data/raw/test_apps.csv
-#    data/raw/sample_submission.csv
-
-# 3. Запустить воспроизведение (~10-15 мин на CPU)
-bash reproduce.sh
-
-# 4. Результат
-#    submissions/final/submission.csv
 ```
 
-Скрипт `reproduce.sh` последовательно обучает 3 CatBoost-модели и 1 XGBoost-модель
-с календарными признаками (`day_num` + `week`, без `month`), затем собирает
-rank-percentile blend (champion_no_month × 0.30 + xgb_no_month × 0.70).
+2. Положить данные в `data/raw/`:
+
+```
+data/raw/train_apps.csv
+data/raw/test_apps.csv
+data/raw/sample_submission.csv
+```
+
+3. Запустить воспроизводимый pipeline (~10–15 мин на CPU):
+
+```bash
+bash reproduce.sh
+```
+
+4. Посмотреть результаты:
+
+- submission: `submissions/final/submission.csv`
+- метрики и отчёты: `reports/`
+- артефакты экспериментов: `experiments/runs/`
+- notebook используется как отчётный слой для анализа результатов.
+
+Скрипт `reproduce.sh` последовательно обучает 3 CatBoost-модели и 1 XGBoost-модель с календарными признаками (`day_num` + `week`, без `month`), затем собирает rank-percentile blend (champion_no_month × 0.30 + xgb_no_month × 0.70).
+
+---
+
+## Что демонстрирует этот проект
+
+- Проектирование воспроизводимого Python ML pipeline.
+- Работу с tabular ML задачей (скоринговая модель).
+- Feature engineering: context-offer features, activity ratios, log-transforms.
+- Leakage-aware validation: rolling time folds, late-holdout батарея (H1/H2/H3).
+- Оценку качества через ROC-AUC.
+- Model blending: rank-percentile blend CatBoost + XGBoost.
+- Config-driven experiments: JSON-конфиги для всех экспериментов.
+- Разделение между переиспользуемым Python-кодом и notebook-отчётом.
+- Автоматические тесты: leakage guard, submission contract, sample weights.
+- Воспроизводимость экспериментов через `reproduce.sh`.
+
+---
 
 ## Цель проекта
 
@@ -52,29 +113,6 @@ rank-percentile blend (champion_no_month × 0.30 + xgb_no_month × 0.70).
 - Нельзя использовать `target_value` как признак.
 - Нельзя использовать test labels или информацию из public leaderboard для подгонки модели.
 - Сабмиты на платформу считаются ограниченным ресурсом: не более 3 загрузок в день.
-
-## Структура проекта
-
-    data/raw/              # исходные CSV-файлы, не коммитятся
-
-    src/alfa_credit/       # основной Python-пакет проекта
-      data.py              # загрузка данных и schema checks
-      features.py          # feature engineering
-      validation.py        # CV, group/time split checks
-      metrics.py           # ROC-AUC и проверки предсказаний
-      models.py            # фабрики моделей
-      train.py             # обучение и OOF-предсказания
-      predict.py           # инференс
-      submit.py            # сборка и проверка submission
-      utils.py             # вспомогательные функции
-
-    scripts/               # CLI-скрипты: обучение, HPO, бленды, диагностика
-    configs/               # JSON-конфиги экспериментов и HPO
-    experiments/runs/      # артефакты запусков: OOF/test predictions, метрики
-    submissions/           # финальные CSV-сабмиты, submission cards, папки upload
-    reports/validation/    # late-holdout батарея, daily progress, weight scans
-    tests/                 # contract-тесты (leakage, submission format, weights)
-    agents/                # 21 специализированный агент (см. agents/README.md)
 
 ## Текущая реализация
 
@@ -251,3 +289,7 @@ CV и late-holdout используются для выбора конфигур
 | 06-20 | XGB rank-blend (w=0.65) | 0.7641 | 76.383 |
 | 06-20 | XGB no_month c20_n80 | 0.7681 | 76.505 |
 | **06-21** | **full_champion_no_month c30_x70** | **0.7692** | **76.744** |
+
+## Лицензия
+
+[MIT](LICENSE)
